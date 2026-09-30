@@ -99,12 +99,14 @@ main{max-width:1240px;margin:0 auto;padding:6px 16px 32px;display:grid;grid-temp
 .subhead{font-family:var(--display);font-weight:400;font-size:1.3rem;color:var(--tile);margin:18px 0 0}
 .subnote{margin:2px 0 4px;font-size:.84rem;color:var(--muted)}
 ol.list{list-style:none;margin:0;padding:0}
-.item{display:grid;grid-template-columns:52px minmax(0,1fr) 40px;gap:2px 10px;padding:12px 0;border-top:1px solid var(--line)}
-.item.place{grid-template-columns:22px minmax(0,1fr) 40px}
+.item{display:grid;grid-template-columns:76px minmax(0,1fr) 40px;gap:2px 10px;padding:12px 0;border-top:1px solid var(--line)}
+.item.place{grid-template-columns:22px minmax(0,1fr) 40px;grid-template-areas:"ic h star" ". body body";align-items:center}
+.item.place>.ic{grid-area:ic}.item.place>h3{grid-area:h}.item.place>.star{grid-area:star}.item.place>.body{grid-area:body;align-self:start}
 .item.flash{animation:flash 1.2s ease-out}
 @keyframes flash{from{background:var(--wash)}to{background:transparent}}
-.t{font-family:var(--display);font-size:1.15rem;line-height:1.1;color:var(--oxblood)}
-.t small{display:block;font-family:var(--body);font-size:.7rem;color:var(--muted);margin-top:3px;line-height:1.2}
+.t{font-family:var(--display);font-size:1.15rem;line-height:1.1;color:var(--oxblood);min-width:0}
+.t .tm{white-space:nowrap}
+.t small{display:block;overflow-wrap:anywhere;font-family:var(--body);font-size:.7rem;color:var(--muted);margin-top:3px;line-height:1.2}
 .item h3{margin:0;font-size:1rem;line-height:1.3}
 .item h3 a{color:inherit;text-decoration:none}
 .meta{margin:3px 0 0;font-size:.86rem;color:var(--muted)}
@@ -138,11 +140,24 @@ footer p{max-width:80ch;margin:0 0 6px}
   .panel{border-radius:4px}
   .tabpane{padding:2px 12px 12px}
 }
-@media (max-width:420px){
+@media (max-width:600px){
+  /* comedy rows: time and price on their own line, details full width below */
+  .item.ev{grid-template-columns:minmax(0,1fr) 40px;grid-template-areas:"t star" "body body";row-gap:2px}
+  .item.ev .t{grid-area:t;display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 10px;align-self:center;font-size:1.25rem}
+  .item.ev .t small{display:inline;margin:0;font-size:.8rem}
+  .item.ev .body{grid-area:body}
+  .item.ev .star{grid-area:star}
+  .item.place{gap:2px 10px;grid-template-areas:"ic h star" "body body body"}
+  .acts{gap:6px}
+  .act{font-size:.78rem;padding:4px 9px;min-height:34px}
+  .acts{gap:5px}
   .tabs button{padding:13px 12px 11px}
-  .item{grid-template-columns:46px minmax(0,1fr) 40px;gap:2px 8px}
-  .t{font-size:1.05rem}
+  .legend{gap:4px 12px;font-size:.8rem}
+  .legend .ic{width:18px;height:18px}
+  h1{font-size:clamp(1.8rem,8.4vw,2.6rem)}
+  .note{font-size:.88rem}
 }
+
 </style>
 </head>
 <body>
@@ -229,6 +244,9 @@ const places = {
                food:"Indian-twist pizzas", note:"Big beer hall in a former engineering works, brewing on site. Opens 12pm Saturdays; busy when sport is on."},
   golffang:   {cat:"extra", name:"Golf Fang", addr:"The Custard Factory, Gibb St, B9 4AA", lat:52.47594, lng:-1.88338, pid:"ChIJd6-vWIC8cEgRIZLs1KKcGBE",
                food:"Food served", note:"Crazy golf and cocktail bar. Open 12pm to 1am Saturdays; book ahead."},
+  lycett:     {cat:"extra", name:"Joe Lycett: EVERY THING MUST GO", addr:"Birmingham Museum & Art Gallery, Chamberlain Square, B3 3DH", lat:52.48098, lng:-1.90352,
+               url:"https://www.birminghammuseums.org.uk/exhibitions/every-thing-must-go",
+               note:"Free exhibition: Joe Lycett's first major solo art show, a salon-style 'neon graveyard' of things no longer with us. Tue-Sun 10am-5pm, so open both Saturday and Sunday. The Tat Vision tatty tours on Saturday are of this exhibition."},
   whiteswan:  {cat:"digbeth", name:"White Swan", addr:"276 Bradford St, B5 6EP", lat:52.47374, lng:-1.88631, pid:"ChIJ2-J5K-W9cEgRCGvEetFUWSQ", camra:130707, heritage:true,
                note:"Two-roomed Victorian pub with a nationally important interior and classic tiling. Hours can vary and it may close early if quiet. 5 min walk from Golf Fang."},
   spotteddog: {cat:"digbeth", name:"The Spotted Dog", addr:"104 Warwick St, B12 0NH", lat:52.47362, lng:-1.88297, pid:"ChIJf5DQ6n-8cEgRiz86YEZ9PuE", camra:130719,
@@ -266,7 +284,7 @@ const places = {
 const SECTIONS=[
   ["pub","Pubs","Good Beer Guide and heritage pubs, in any order."],
   ["digbeth","Near Golf Fang","Digbeth pubs within a few minutes' walk of the Custard Factory."],
-  ["extra","Others","Brewery taproom and crazy golf."],
+  ["extra","Others","Brewery taproom, crazy golf and Joe Lycett's exhibition."],
   ["nearhotel","Near hotel","For a pint without going into town."],
   ["brunch","Sunday brunch","All closer to the hotel than the city centre."]
 ];
@@ -346,7 +364,7 @@ const gmaps = p => "https://www.google.com/maps/search/?api=1&query="+encodeURIC
 const camra = p => p.camra ? "https://birmingham.camra.org.uk/viewnode.php?id="+p.camra : null;
 const ext = (href,label) => `<a class="act" href="${href}" target="_blank" rel="noopener">${label}</a>`;
 function placeActs(id,p){
-  return `<div class="acts"><button class="act" data-focus="${id}">Show on map</button>${ext(gmaps(p),"Google Maps")}${camra(p)?ext(camra(p),"CAMRA"):""}</div>`;
+  return `<div class="acts"><button class="act" data-focus="${id}">Show on map</button>${p.url?ext(p.url,"Details"):""}${ext(gmaps(p),"Google Maps")}${camra(p)?ext(camra(p),"CAMRA"):""}</div>`;
 }
 
 /* ---------- plan state ---------- */
@@ -372,7 +390,7 @@ function popupHTML(id){
   const tags=[p.gbg&&"Good Beer Guide",p.heritage&&"Historic interior",p.food&&("Food: "+p.food)].filter(Boolean);
   if(tags.length) h+=`<p>${esc(tags.join(". "))}</p>`;
   if(shows.length) h+=`<p>${shows.map(e=>`<b>${fmt(e.t)}</b> ${esc(e.title)}`).join("<br>")}</p>`;
-  h+=`<p><a href="${gmaps(p)}" target="_blank" rel="noopener">Google Maps</a>${camra(p)?` · <a href="${camra(p)}" target="_blank" rel="noopener">CAMRA</a>`:""}</p>`;
+  h+=`<p>${p.url?`<a href="${p.url}" target="_blank" rel="noopener">Details</a> · `:""}<a href="${gmaps(p)}" target="_blank" rel="noopener">Google Maps</a>${camra(p)?` · <a href="${camra(p)}" target="_blank" rel="noopener">CAMRA</a>`:""}</p>`;
   if(p.cat!=="venue"&&p.cat!=="hotel"){ const k="p:"+id; h+=`<button class="popstar" data-star="${k}" aria-pressed="${plan.has(k)}">${plan.has(k)?"★ In my plan":"☆ Add to plan"}</button>`; }
   return h;
 }
@@ -419,15 +437,16 @@ function selectPlace(id){
 function placeRow(id,p){
   const shows=events.filter(e=>e.v===id);
   const li=el("li",{class:"item place",id:"row-"+id});
-    li.innerHTML=`${icon(kindOf(id))}
-    <div><h3><a href="${gmaps(p)}" target="_blank" rel="noopener">${esc(p.name)}</a></h3>
+  li.innerHTML=`${icon(kindOf(id))}
+    <h3><a href="${gmaps(p)}" target="_blank" rel="noopener">${esc(p.name)}</a></h3>
+    ${starBtn("p:"+id,p.name)}
+    <div class="body">
       <p class="meta">${p.gbg?'<span class="badge b-gbg">Good Beer Guide</span>':''}${p.heritage?'<span class="badge b-her">Historic interior</span>':''}${esc(p.addr)}</p>
       <p class="note">${esc(p.note)}</p>
       ${p.food?`<p class="meta"><span class="badge b-food">Food</span>${esc(p.food)}</p>`:""}
       ${shows.length?`<p class="meta">Comedy here: ${shows.map(e=>`${fmt(e.t)} ${esc(e.title.split(":")[0])}`).join(", ")}</p>`:""}
       ${placeActs(id,p)}
-    </div>
-    ${starBtn("p:"+id,p.name)}`;
+    </div>`;
   return li;
 }
 function renderPlaces(cat){
@@ -449,9 +468,9 @@ function buildTabs(){
 function eventRow(e, opts={}){
   const v=places[e.v], np=nearestPub(e.v);
   const where = v.cat==="pub" ? `<span class="badge b-pub">In one of the pubs</span>` : `${np.min} min walk from ${esc(places[np.id].name)}`;
-  const li=el("li",{class:"item"});
-  li.innerHTML=`<div class="t">${fmt(e.t)}<small>${esc(e.price)}</small></div>
-    <div><h3><a href="${e.url}" target="_blank" rel="noopener">${esc(e.title)}</a></h3>
+  const li=el("li",{class:"item ev"});
+  li.innerHTML=`<div class="t"><span class="tm">${fmt(e.t)}</span><small>${esc(e.price)}</small></div>
+    <div class="body"><h3><a href="${e.url}" target="_blank" rel="noopener">${esc(e.title)}</a></h3>
       <p class="meta">${isFree(e)?'<span class="badge b-free">Free, donate on exit</span>':''}${opts.clash?'<span class="badge b-warn">Clashes with previous</span>':''}<strong style="color:var(--ink);font-weight:600">${esc(v.name)}</strong></p>
       <p class="meta">${where}${e.extra?". "+esc(e.extra):""}</p>
       <div class="acts"><button class="act" data-focus="${e.v}">Show on map</button>${state.tab==="comedy"&&!state.venue?`<button class="act" data-venue="${e.v}">All shows here</button>`:""}${ext(gmaps(v),"Google Maps")}${camra(v)?ext(camra(v),"CAMRA"):""}</div>
