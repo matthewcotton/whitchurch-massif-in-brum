@@ -3,673 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Pints and punchlines: Birmingham, Sat 3 October</title>
+<meta name="theme-color" content="#1E4068">
+<title>Whitchurch Massif in Brum</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
-/* required styles */
-
-.leaflet-pane,
-.leaflet-tile,
-.leaflet-marker-icon,
-.leaflet-marker-shadow,
-.leaflet-tile-container,
-.leaflet-pane > svg,
-.leaflet-pane > canvas,
-.leaflet-zoom-box,
-.leaflet-image-layer,
-.leaflet-layer {
-	position: absolute;
-	left: 0;
-	top: 0;
-	}
-.leaflet-container {
-	overflow: hidden;
-	}
-.leaflet-tile,
-.leaflet-marker-icon,
-.leaflet-marker-shadow {
-	-webkit-user-select: none;
-	   -moz-user-select: none;
-	        user-select: none;
-	  -webkit-user-drag: none;
-	}
-/* Prevents IE11 from highlighting tiles in blue */
-.leaflet-tile::selection {
-	background: transparent;
-}
-/* Safari renders non-retina tile on retina better with this, but Chrome is worse */
-.leaflet-safari .leaflet-tile {
-	image-rendering: -webkit-optimize-contrast;
-	}
-/* hack that prevents hw layers "stretching" when loading new tiles */
-.leaflet-safari .leaflet-tile-container {
-	width: 1600px;
-	height: 1600px;
-	-webkit-transform-origin: 0 0;
-	}
-.leaflet-marker-icon,
-.leaflet-marker-shadow {
-	display: block;
-	}
-/* .leaflet-container svg: reset svg max-width decleration shipped in Joomla! (joomla.org) 3.x */
-/* .leaflet-container img: map is broken in FF if you have max-width: 100% on tiles */
-.leaflet-container .leaflet-overlay-pane svg {
-	max-width: none !important;
-	max-height: none !important;
-	}
-.leaflet-container .leaflet-marker-pane img,
-.leaflet-container .leaflet-shadow-pane img,
-.leaflet-container .leaflet-tile-pane img,
-.leaflet-container img.leaflet-image-layer,
-.leaflet-container .leaflet-tile {
-	max-width: none !important;
-	max-height: none !important;
-	width: auto;
-	padding: 0;
-	}
-
-.leaflet-container img.leaflet-tile {
-	/* See: https://bugs.chromium.org/p/chromium/issues/detail?id=600120 */
-	mix-blend-mode: plus-lighter;
-}
-
-.leaflet-container.leaflet-touch-zoom {
-	-ms-touch-action: pan-x pan-y;
-	touch-action: pan-x pan-y;
-	}
-.leaflet-container.leaflet-touch-drag {
-	-ms-touch-action: pinch-zoom;
-	/* Fallback for FF which doesn't support pinch-zoom */
-	touch-action: none;
-	touch-action: pinch-zoom;
-}
-.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
-	-ms-touch-action: none;
-	touch-action: none;
-}
-.leaflet-container {
-	-webkit-tap-highlight-color: transparent;
-}
-.leaflet-container a {
-	-webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);
-}
-.leaflet-tile {
-	filter: inherit;
-	visibility: hidden;
-	}
-.leaflet-tile-loaded {
-	visibility: inherit;
-	}
-.leaflet-zoom-box {
-	width: 0;
-	height: 0;
-	-moz-box-sizing: border-box;
-	     box-sizing: border-box;
-	z-index: 800;
-	}
-/* workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=888319 */
-.leaflet-overlay-pane svg {
-	-moz-user-select: none;
-	}
-
-.leaflet-pane         { z-index: 400; }
-
-.leaflet-tile-pane    { z-index: 200; }
-.leaflet-overlay-pane { z-index: 400; }
-.leaflet-shadow-pane  { z-index: 500; }
-.leaflet-marker-pane  { z-index: 600; }
-.leaflet-tooltip-pane   { z-index: 650; }
-.leaflet-popup-pane   { z-index: 700; }
-
-.leaflet-map-pane canvas { z-index: 100; }
-.leaflet-map-pane svg    { z-index: 200; }
-
-.leaflet-vml-shape {
-	width: 1px;
-	height: 1px;
-	}
-.lvml {
-	behavior: url(#default#VML);
-	display: inline-block;
-	position: absolute;
-	}
-
-
-/* control positioning */
-
-.leaflet-control {
-	position: relative;
-	z-index: 800;
-	pointer-events: visiblePainted; /* IE 9-10 doesn't have auto */
-	pointer-events: auto;
-	}
-.leaflet-top,
-.leaflet-bottom {
-	position: absolute;
-	z-index: 1000;
-	pointer-events: none;
-	}
-.leaflet-top {
-	top: 0;
-	}
-.leaflet-right {
-	right: 0;
-	}
-.leaflet-bottom {
-	bottom: 0;
-	}
-.leaflet-left {
-	left: 0;
-	}
-.leaflet-control {
-	float: left;
-	clear: both;
-	}
-.leaflet-right .leaflet-control {
-	float: right;
-	}
-.leaflet-top .leaflet-control {
-	margin-top: 10px;
-	}
-.leaflet-bottom .leaflet-control {
-	margin-bottom: 10px;
-	}
-.leaflet-left .leaflet-control {
-	margin-left: 10px;
-	}
-.leaflet-right .leaflet-control {
-	margin-right: 10px;
-	}
-
-
-/* zoom and fade animations */
-
-.leaflet-fade-anim .leaflet-popup {
-	opacity: 0;
-	-webkit-transition: opacity 0.2s linear;
-	   -moz-transition: opacity 0.2s linear;
-	        transition: opacity 0.2s linear;
-	}
-.leaflet-fade-anim .leaflet-map-pane .leaflet-popup {
-	opacity: 1;
-	}
-.leaflet-zoom-animated {
-	-webkit-transform-origin: 0 0;
-	    -ms-transform-origin: 0 0;
-	        transform-origin: 0 0;
-	}
-svg.leaflet-zoom-animated {
-	will-change: transform;
-}
-
-.leaflet-zoom-anim .leaflet-zoom-animated {
-	-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);
-	   -moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.25,1);
-	        transition:         transform 0.25s cubic-bezier(0,0,0.25,1);
-	}
-.leaflet-zoom-anim .leaflet-tile,
-.leaflet-pan-anim .leaflet-tile {
-	-webkit-transition: none;
-	   -moz-transition: none;
-	        transition: none;
-	}
-
-.leaflet-zoom-anim .leaflet-zoom-hide {
-	visibility: hidden;
-	}
-
-
-/* cursors */
-
-.leaflet-interactive {
-	cursor: pointer;
-	}
-.leaflet-grab {
-	cursor: -webkit-grab;
-	cursor:    -moz-grab;
-	cursor:         grab;
-	}
-.leaflet-crosshair,
-.leaflet-crosshair .leaflet-interactive {
-	cursor: crosshair;
-	}
-.leaflet-popup-pane,
-.leaflet-control {
-	cursor: auto;
-	}
-.leaflet-dragging .leaflet-grab,
-.leaflet-dragging .leaflet-grab .leaflet-interactive,
-.leaflet-dragging .leaflet-marker-draggable {
-	cursor: move;
-	cursor: -webkit-grabbing;
-	cursor:    -moz-grabbing;
-	cursor:         grabbing;
-	}
-
-/* marker & overlays interactivity */
-.leaflet-marker-icon,
-.leaflet-marker-shadow,
-.leaflet-image-layer,
-.leaflet-pane > svg path,
-.leaflet-tile-container {
-	pointer-events: none;
-	}
-
-.leaflet-marker-icon.leaflet-interactive,
-.leaflet-image-layer.leaflet-interactive,
-.leaflet-pane > svg path.leaflet-interactive,
-svg.leaflet-image-layer.leaflet-interactive path {
-	pointer-events: visiblePainted; /* IE 9-10 doesn't have auto */
-	pointer-events: auto;
-	}
-
-/* visual tweaks */
-
-.leaflet-container {
-	background: #ddd;
-	outline-offset: 1px;
-	}
-.leaflet-container a {
-	color: #0078A8;
-	}
-.leaflet-zoom-box {
-	border: 2px dotted #38f;
-	background: rgba(255,255,255,0.5);
-	}
-
-
-/* general typography */
-.leaflet-container {
-	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	font-size: 0.75rem;
-	line-height: 1.5;
-	}
-
-
-/* general toolbar styles */
-
-.leaflet-bar {
-	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
-	border-radius: 4px;
-	}
-.leaflet-bar a {
-	background-color: #fff;
-	border-bottom: 1px solid #ccc;
-	width: 26px;
-	height: 26px;
-	line-height: 26px;
-	display: block;
-	text-align: center;
-	text-decoration: none;
-	color: black;
-	}
-.leaflet-bar a,
-.leaflet-control-layers-toggle {
-	background-position: 50% 50%;
-	background-repeat: no-repeat;
-	display: block;
-	}
-.leaflet-bar a:hover,
-.leaflet-bar a:focus {
-	background-color: #f4f4f4;
-	}
-.leaflet-bar a:first-child {
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
-	}
-.leaflet-bar a:last-child {
-	border-bottom-left-radius: 4px;
-	border-bottom-right-radius: 4px;
-	border-bottom: none;
-	}
-.leaflet-bar a.leaflet-disabled {
-	cursor: default;
-	background-color: #f4f4f4;
-	color: #bbb;
-	}
-
-.leaflet-touch .leaflet-bar a {
-	width: 30px;
-	height: 30px;
-	line-height: 30px;
-	}
-.leaflet-touch .leaflet-bar a:first-child {
-	border-top-left-radius: 2px;
-	border-top-right-radius: 2px;
-	}
-.leaflet-touch .leaflet-bar a:last-child {
-	border-bottom-left-radius: 2px;
-	border-bottom-right-radius: 2px;
-	}
-
-/* zoom control */
-
-.leaflet-control-zoom-in,
-.leaflet-control-zoom-out {
-	font: bold 18px 'Lucida Console', Monaco, monospace;
-	text-indent: 1px;
-	}
-
-.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out  {
-	font-size: 22px;
-	}
-
-
-/* layers control */
-
-.leaflet-control-layers {
-	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
-	background: #fff;
-	border-radius: 5px;
-	}
-.leaflet-control-layers-toggle {
-	background-image: url(images/layers.png);
-	width: 36px;
-	height: 36px;
-	}
-.leaflet-retina .leaflet-control-layers-toggle {
-	background-image: url(images/layers-2x.png);
-	background-size: 26px 26px;
-	}
-.leaflet-touch .leaflet-control-layers-toggle {
-	width: 44px;
-	height: 44px;
-	}
-.leaflet-control-layers .leaflet-control-layers-list,
-.leaflet-control-layers-expanded .leaflet-control-layers-toggle {
-	display: none;
-	}
-.leaflet-control-layers-expanded .leaflet-control-layers-list {
-	display: block;
-	position: relative;
-	}
-.leaflet-control-layers-expanded {
-	padding: 6px 10px 6px 6px;
-	color: #333;
-	background: #fff;
-	}
-.leaflet-control-layers-scrollbar {
-	overflow-y: scroll;
-	overflow-x: hidden;
-	padding-right: 5px;
-	}
-.leaflet-control-layers-selector {
-	margin-top: 2px;
-	position: relative;
-	top: 1px;
-	}
-.leaflet-control-layers label {
-	display: block;
-	font-size: 13px;
-	font-size: 1.08333em;
-	}
-.leaflet-control-layers-separator {
-	height: 0;
-	border-top: 1px solid #ddd;
-	margin: 5px -10px 5px -6px;
-	}
-
-/* Default icon URLs */
-.leaflet-default-icon-path { /* used only in path-guessing heuristic, see L.Icon.Default */
-	background-image: url(images/marker-icon.png);
-	}
-
-
-/* attribution and scale controls */
-
-.leaflet-container .leaflet-control-attribution {
-	background: #fff;
-	background: rgba(255, 255, 255, 0.8);
-	margin: 0;
-	}
-.leaflet-control-attribution,
-.leaflet-control-scale-line {
-	padding: 0 5px;
-	color: #333;
-	line-height: 1.4;
-	}
-.leaflet-control-attribution a {
-	text-decoration: none;
-	}
-.leaflet-control-attribution a:hover,
-.leaflet-control-attribution a:focus {
-	text-decoration: underline;
-	}
-.leaflet-attribution-flag {
-	display: inline !important;
-	vertical-align: baseline !important;
-	width: 1em;
-	height: 0.6669em;
-	}
-.leaflet-left .leaflet-control-scale {
-	margin-left: 5px;
-	}
-.leaflet-bottom .leaflet-control-scale {
-	margin-bottom: 5px;
-	}
-.leaflet-control-scale-line {
-	border: 2px solid #777;
-	border-top: none;
-	line-height: 1.1;
-	padding: 2px 5px 1px;
-	white-space: nowrap;
-	-moz-box-sizing: border-box;
-	     box-sizing: border-box;
-	background: rgba(255, 255, 255, 0.8);
-	text-shadow: 1px 1px #fff;
-	}
-.leaflet-control-scale-line:not(:first-child) {
-	border-top: 2px solid #777;
-	border-bottom: none;
-	margin-top: -2px;
-	}
-.leaflet-control-scale-line:not(:first-child):not(:last-child) {
-	border-bottom: 2px solid #777;
-	}
-
-.leaflet-touch .leaflet-control-attribution,
-.leaflet-touch .leaflet-control-layers,
-.leaflet-touch .leaflet-bar {
-	box-shadow: none;
-	}
-.leaflet-touch .leaflet-control-layers,
-.leaflet-touch .leaflet-bar {
-	border: 2px solid rgba(0,0,0,0.2);
-	background-clip: padding-box;
-	}
-
-
-/* popup */
-
-.leaflet-popup {
-	position: absolute;
-	text-align: center;
-	margin-bottom: 20px;
-	}
-.leaflet-popup-content-wrapper {
-	padding: 1px;
-	text-align: left;
-	border-radius: 12px;
-	}
-.leaflet-popup-content {
-	margin: 13px 24px 13px 20px;
-	line-height: 1.3;
-	font-size: 13px;
-	font-size: 1.08333em;
-	min-height: 1px;
-	}
-.leaflet-popup-content p {
-	margin: 17px 0;
-	margin: 1.3em 0;
-	}
-.leaflet-popup-tip-container {
-	width: 40px;
-	height: 20px;
-	position: absolute;
-	left: 50%;
-	margin-top: -1px;
-	margin-left: -20px;
-	overflow: hidden;
-	pointer-events: none;
-	}
-.leaflet-popup-tip {
-	width: 17px;
-	height: 17px;
-	padding: 1px;
-
-	margin: -10px auto 0;
-	pointer-events: auto;
-
-	-webkit-transform: rotate(45deg);
-	   -moz-transform: rotate(45deg);
-	    -ms-transform: rotate(45deg);
-	        transform: rotate(45deg);
-	}
-.leaflet-popup-content-wrapper,
-.leaflet-popup-tip {
-	background: white;
-	color: #333;
-	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
-	}
-.leaflet-container a.leaflet-popup-close-button {
-	position: absolute;
-	top: 0;
-	right: 0;
-	border: none;
-	text-align: center;
-	width: 24px;
-	height: 24px;
-	font: 16px/24px Tahoma, Verdana, sans-serif;
-	color: #757575;
-	text-decoration: none;
-	background: transparent;
-	}
-.leaflet-container a.leaflet-popup-close-button:hover,
-.leaflet-container a.leaflet-popup-close-button:focus {
-	color: #585858;
-	}
-.leaflet-popup-scrolled {
-	overflow: auto;
-	}
-
-.leaflet-oldie .leaflet-popup-content-wrapper {
-	-ms-zoom: 1;
-	}
-.leaflet-oldie .leaflet-popup-tip {
-	width: 24px;
-	margin: 0 auto;
-
-	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
-	filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
-	}
-
-.leaflet-oldie .leaflet-control-zoom,
-.leaflet-oldie .leaflet-control-layers,
-.leaflet-oldie .leaflet-popup-content-wrapper,
-.leaflet-oldie .leaflet-popup-tip {
-	border: 1px solid #999;
-	}
-
-
-/* div icon */
-
-.leaflet-div-icon {
-	background: #fff;
-	border: 1px solid #666;
-	}
-
-
-/* Tooltip */
-/* Base styles for the element that has a tooltip */
-.leaflet-tooltip {
-	position: absolute;
-	padding: 6px;
-	background-color: #fff;
-	border: 1px solid #fff;
-	border-radius: 3px;
-	color: #222;
-	white-space: nowrap;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	pointer-events: none;
-	box-shadow: 0 1px 3px rgba(0,0,0,0.4);
-	}
-.leaflet-tooltip.leaflet-interactive {
-	cursor: pointer;
-	pointer-events: auto;
-	}
-.leaflet-tooltip-top:before,
-.leaflet-tooltip-bottom:before,
-.leaflet-tooltip-left:before,
-.leaflet-tooltip-right:before {
-	position: absolute;
-	pointer-events: none;
-	border: 6px solid transparent;
-	background: transparent;
-	content: "";
-	}
-
-/* Directions */
-
-.leaflet-tooltip-bottom {
-	margin-top: 6px;
-}
-.leaflet-tooltip-top {
-	margin-top: -6px;
-}
-.leaflet-tooltip-bottom:before,
-.leaflet-tooltip-top:before {
-	left: 50%;
-	margin-left: -6px;
-	}
-.leaflet-tooltip-top:before {
-	bottom: 0;
-	margin-bottom: -12px;
-	border-top-color: #fff;
-	}
-.leaflet-tooltip-bottom:before {
-	top: 0;
-	margin-top: -12px;
-	margin-left: -6px;
-	border-bottom-color: #fff;
-	}
-.leaflet-tooltip-left {
-	margin-left: -6px;
-}
-.leaflet-tooltip-right {
-	margin-left: 6px;
-}
-.leaflet-tooltip-left:before,
-.leaflet-tooltip-right:before {
-	top: 50%;
-	margin-top: -6px;
-	}
-.leaflet-tooltip-left:before {
-	right: 0;
-	margin-right: -12px;
-	border-left-color: #fff;
-	}
-.leaflet-tooltip-right:before {
-	left: 0;
-	margin-left: -12px;
-	border-right-color: #fff;
-	}
-
-/* Printing */
-
-@media print {
-	/* Prevent printers from removing background-images of controls. */
-	.leaflet-control {
-		-webkit-print-color-adjust: exact;
-		print-color-adjust: exact;
-		}
-	}
-
 :root{
   --bg:#E6EBE9; --panel:#F8F9F7; --ink:#1B2127; --muted:#566069; --line:#C6CFCC;
   --tile:#1E4068; --glaze:#2E5D4F; --brass:#A67B2C; --oxblood:#8B2E3A; --wash:#DCE4E1;
@@ -685,212 +25,259 @@ svg.leaflet-image-layer.leaflet-interactive path {
     --tile:#7FA6D4; --glaze:#74AE98; --brass:#D6A955; --oxblood:#DE7F8A; --wash:#1E2A33;
   }
 }
-:root[data-theme="dark"]{
-  --bg:#11171C; --panel:#182129; --ink:#E5EAE8; --muted:#9AA6AE; --line:#2C3943;
-  --tile:#7FA6D4; --glaze:#74AE98; --brass:#D6A955; --oxblood:#DE7F8A; --wash:#1E2A33;
-}
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--body);-webkit-font-smoothing:antialiased}
+html{scroll-padding-top:calc(56px + env(safe-area-inset-top,0px));-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 var(--body);-webkit-font-smoothing:antialiased}
 a{color:var(--tile)}
 button{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--brass);outline-offset:2px}
 
-header{max-width:1240px;margin:0 auto;padding:28px 20px 12px}
-h1{font-family:var(--display);font-weight:400;font-size:clamp(2.2rem,6vw,4rem);line-height:1;margin:0;letter-spacing:.005em;color:var(--tile)}
-.lede{max-width:62ch;margin:12px 0 0;color:var(--muted);font-size:1.02rem}
-.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:16px 0 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
-.legend li{display:flex;align-items:center;gap:7px}
-.key{width:14px;height:14px;display:inline-block}
-.key.pub{border-radius:50%;background:var(--glaze)}
-.key.comedy{background:var(--oxblood);clip-path:polygon(50% 0,100% 100%,0 100%)}
-.key.hotel{background:var(--brass)}
-.key.both{border-radius:50%;background:var(--glaze);box-shadow:0 0 0 3px var(--oxblood)}
+header{max-width:1240px;margin:0 auto;padding:22px 16px 10px}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(2rem,7vw,3.6rem);line-height:1;margin:0;color:var(--tile)}
+.dates{margin:6px 0 0;color:var(--muted);font-weight:600;font-size:.95rem}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:12px 0 0;padding:0;list-style:none;font-size:.82rem;color:var(--muted)}
+.legend li{display:flex;align-items:center;gap:6px}
+.key{width:13px;height:13px;display:inline-block;flex:none}
+.key.pub{border-radius:50%;background:#2E5D4F}
+.key.both{border-radius:50%;background:#2E5D4F;box-shadow:0 0 0 2px #8B2E3A}
+.key.alt{border-radius:50%;background:#fff;border:3px solid #2E5D4F}
+.key.comedy{border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#8B2E3A}
+.key.other{background:#8B2E3A;transform:rotate(45deg) scale(.85)}
+.key.brunch{border-radius:50%;background:#A67B2C}
+.key.hotel{border-radius:2px;background:#1E4068}
 
-main{max-width:1240px;margin:0 auto;padding:8px 20px 40px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:22px;align-items:start}
-@media (max-width:900px){main{grid-template-columns:1fr}}
-.subhead{font-family:var(--display);font-weight:400;font-size:1.4rem;color:var(--tile);margin:22px 0 4px}
-.pubnum.other{background:var(--oxblood);border-radius:4px}
-.b-food{border:1px solid var(--brass);color:var(--brass)}
-.mapcta{display:inline-block;margin-top:14px;padding:10px 16px;border-radius:999px;background:var(--tile);color:var(--panel);font-weight:600;text-decoration:none}
-@media (max-width:900px){main{grid-template-columns:1fr}}
+main{max-width:1240px;margin:0 auto;padding:6px 16px 32px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:20px;align-items:start}
 
 /* Map */
-.mapframe{position:sticky;top:calc(12px + env(safe-area-inset-top,0px));padding:8px;background:
-  repeating-linear-gradient(45deg,var(--tile) 0 6px,var(--brass) 6px 12px);border-radius:4px}
-@media (max-width:900px){.mapframe{position:relative;top:0}}
+.mapframe{position:sticky;top:calc(12px + env(safe-area-inset-top,0px));padding:6px;background:repeating-linear-gradient(45deg,var(--tile) 0 6px,var(--brass) 6px 12px);border-radius:4px}
 .mapinner{background:var(--panel);border:3px solid var(--brass);border-radius:2px;overflow:hidden;position:relative}
-#map{height:min(72vh,640px);width:100%;background:var(--wash)}
-@media (max-width:900px){#map{height:60vh}}
-.maphint{margin:0;padding:8px 12px;font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);background:var(--panel)}
-.maperr{display:none;position:absolute;left:12px;right:12px;top:12px;z-index:1000;background:var(--panel);border:2px solid var(--oxblood);border-radius:4px;padding:10px 12px;font-size:.9rem}
+#map{height:min(76vh,680px);width:100%;background:var(--wash)}
+.maphint{margin:0;padding:6px 10px;font-size:.75rem;color:var(--muted);border-top:1px solid var(--line);background:var(--panel)}
+.maperr{display:none;position:absolute;left:10px;right:10px;top:10px;z-index:1000;background:var(--panel);border:2px solid var(--oxblood);border-radius:4px;padding:10px 12px;font-size:.9rem}
 .maperr.on{display:block}
-.pin{display:grid;place-items:center;width:30px;height:30px;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35);font:700 14px var(--body);color:#fff}
+.pin{display:grid;place-items:center;width:28px;height:28px;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35);font:700 13px var(--body);color:#fff}
 .pin.pub{border-radius:50%;background:#2E5D4F}
 .pin.both{border-radius:50%;background:#2E5D4F;box-shadow:0 0 0 3px #8B2E3A,0 1px 4px rgba(0,0,0,.35)}
+.pin.alt{border-radius:50%;background:#fff;border:5px solid #2E5D4F}
 .pin.comedy{border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#8B2E3A}
-.pin.comedy span{transform:rotate(45deg)}
-.pin.hotel{border-radius:4px;background:#A67B2C}
+.pin.other{border-radius:4px;background:#8B2E3A;transform:rotate(45deg);width:24px;height:24px}
+.pin.brunch{border-radius:50%;background:#A67B2C}
+.pin.hotel{border-radius:4px;background:#1E4068}
 .pin.sel{outline:4px solid #A67B2C;outline-offset:2px}
-.leaflet-marker-icon.dim{opacity:.3}
 .leaflet-popup-content{font:14px/1.4 var(--body);margin:10px 14px}
 .leaflet-popup-content strong{font-size:15px}
 .leaflet-popup-content p{margin:4px 0}
 .leaflet-container a{color:#1E4068}
+.popstar{margin-top:4px;border:1px solid #A67B2C;background:#fff;color:#1B2127;border-radius:999px;padding:4px 10px;cursor:pointer;font-weight:600}
+.popstar[aria-pressed="true"]{background:#A67B2C;color:#fff}
 
-.pin.other{border-radius:4px;background:#8B2E3A;transform:rotate(45deg);width:24px;height:24px}
-.key.other{background:var(--oxblood);transform:rotate(45deg)}
-/* Side panel */
+/* Panel */
 .panel{background:var(--panel);border:1px solid var(--line);border-radius:6px;min-width:0}
-.tabs{display:flex;border-bottom:1px solid var(--line)}
-.tabs button{flex:1;background:none;border:0;padding:14px 10px 12px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+.tabs{display:flex;border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);background:var(--panel);z-index:5;border-radius:6px 6px 0 0;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:0 0 auto;white-space:nowrap;scroll-snap-align:start;background:none;border:0;padding:14px 14px 12px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px;min-height:48px}
 .tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--oxblood)}
-.tabs .n{display:inline-block;min-width:1.5em;margin-left:4px;padding:0 5px;border-radius:9px;background:var(--wash);font-size:.8rem;color:var(--ink)}
-.tabpane{padding:16px}
+.tabs .n{display:inline-block;min-width:1.5em;margin-left:4px;padding:0 5px;border-radius:9px;background:var(--wash);font-size:.78rem;color:var(--ink)}
+.tabwrap{position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.tabwrap::after{content:"";position:absolute;right:0;top:0;bottom:1px;width:28px;pointer-events:none;background:linear-gradient(to right,transparent,var(--panel));border-radius:0 6px 0 0}
+.tabpane{padding:4px 14px 14px}
 .tabpane[hidden]{display:none}
 
-.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0 4px}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
-.seg button{background:none;border:0;padding:6px 12px;cursor:pointer;font-size:.9rem;color:var(--muted)}
+.seg button{background:none;border:0;padding:7px 12px;cursor:pointer;font-size:.88rem;color:var(--muted);min-height:36px}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--panel)}
-.check{display:inline-flex;align-items:center;gap:6px;font-size:.9rem;color:var(--muted);cursor:pointer}
-.venuechip{display:none;align-items:center;gap:6px;background:var(--wash);border-radius:999px;padding:4px 6px 4px 12px;font-size:.88rem}
+.check{display:inline-flex;align-items:center;gap:6px;font-size:.88rem;color:var(--muted);cursor:pointer;min-height:36px}
+.check input{width:18px;height:18px}
+.venuechip{display:none;align-items:center;gap:6px;background:var(--wash);border-radius:999px;padding:4px 6px 4px 12px;font-size:.86rem}
 .venuechip.on{display:inline-flex}
-.venuechip button{border:0;background:var(--panel);border-radius:50%;width:24px;height:24px;cursor:pointer;line-height:1}
+.venuechip button{border:0;background:var(--panel);border-radius:50%;width:28px;height:28px;cursor:pointer;line-height:1}
 
-ol.list,ul.list{list-style:none;margin:0;padding:0}
-.item{display:grid;grid-template-columns:64px 1fr auto;gap:4px 12px;padding:12px 0;border-top:1px solid var(--line)}
-.item:first-child{border-top:0}
-.t{font-family:var(--display);font-size:1.25rem;line-height:1.1;color:var(--oxblood)}
-.t small{display:block;font-family:var(--body);font-size:.72rem;color:var(--muted);margin-top:2px}
+.subhead{font-family:var(--display);font-weight:400;font-size:1.3rem;color:var(--tile);margin:18px 0 0}
+.subnote{margin:2px 0 4px;font-size:.84rem;color:var(--muted)}
+ol.list{list-style:none;margin:0;padding:0}
+.item{display:grid;grid-template-columns:52px minmax(0,1fr) 40px;gap:2px 10px;padding:12px 0;border-top:1px solid var(--line)}
+.item.place{grid-template-columns:16px minmax(0,1fr) 40px}
+.item.flash{animation:flash 1.2s ease-out}
+@keyframes flash{from{background:var(--wash)}to{background:transparent}}
+.t{font-family:var(--display);font-size:1.15rem;line-height:1.1;color:var(--oxblood)}
+.t small{display:block;font-family:var(--body);font-size:.7rem;color:var(--muted);margin-top:3px;line-height:1.2}
+.dot{width:14px;height:14px;margin-top:4px;border-radius:50%}
+.dot.pub{background:#2E5D4F}.dot.alt{background:#fff;border:3px solid #2E5D4F}.dot.other{background:#8B2E3A;border-radius:2px;transform:rotate(45deg) scale(.8)}.dot.brunch{background:#A67B2C}
 .item h3{margin:0;font-size:1rem;line-height:1.3}
 .item h3 a{color:inherit;text-decoration:none}
-.item h3 a:hover{text-decoration:underline}
-.meta{margin:2px 0 0;font-size:.88rem;color:var(--muted)}
-.meta .v{color:var(--ink);font-weight:500;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
-.badge{display:inline-block;font-size:.75rem;font-weight:600;padding:1px 7px;border-radius:3px;margin-right:4px;vertical-align:1px}
+.meta{margin:3px 0 0;font-size:.86rem;color:var(--muted)}
+.note{font-size:.9rem;margin:4px 0 0}
+.badge{display:inline-block;font-size:.72rem;font-weight:600;padding:1px 6px;border-radius:3px;margin:0 4px 2px 0;vertical-align:1px}
 .b-free{background:var(--glaze);color:var(--panel)}
 .b-pub{border:1px solid var(--glaze);color:var(--glaze)}
 .b-gbg{background:var(--tile);color:var(--panel)}
 .b-her{background:var(--brass);color:var(--panel)}
 .b-warn{background:var(--oxblood);color:var(--panel)}
-.star{background:none;border:1px solid var(--line);border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:1.1rem;color:var(--muted);align-self:start}
-.star[aria-pressed="true"]{background:var(--brass);border-color:var(--brass);color:var(--panel)}
-.empty{color:var(--muted);padding:16px 0 4px;margin:0}
-
-.pubnum{display:grid;place-items:center;width:22px;height:22px;margin-top:4px;border-radius:50%;background:var(--glaze);color:var(--panel);font-family:var(--display);font-size:1.25rem}
-.hotelcard h3{cursor:pointer}
-.hotelcard{display:flex;gap:12px;align-items:flex-start;padding:12px;margin-bottom:6px;background:var(--wash);border-radius:4px}
-.hotelcard .sq{flex:0 0 18px;height:18px;background:var(--brass);margin-top:4px}
-.hotelcard p{margin:2px 0 0;font-size:.9rem;color:var(--muted)}
-.dir{font-size:.85rem;white-space:nowrap}
-.note{font-size:.9rem;margin:4px 0 0}
-.plannote{font-size:.9rem;color:var(--muted);margin:0 0 8px}
-footer{max-width:1240px;margin:0 auto;padding:0 20px 36px;font-size:.84rem;color:var(--muted)}
+.b-food{border:1px solid var(--brass);color:var(--brass)}
+.acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.act{display:inline-flex;align-items:center;min-height:32px;padding:4px 11px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--tile);font-size:.82rem;font-weight:600;text-decoration:none;cursor:pointer}
+.act:hover{border-color:var(--tile)}
+.star{background:none;border:1px solid var(--line);border-radius:50%;width:40px;height:40px;cursor:pointer;font-size:1.05rem;color:var(--muted);align-self:start}
+.star[aria-pressed="true"]{background:var(--brass);border-color:var(--brass);color:#fff}
+.empty{color:var(--muted);padding:14px 0 4px;margin:0}
+.hotelcard{display:grid;grid-template-columns:16px minmax(0,1fr);gap:0 10px;padding:12px;margin-top:10px;background:var(--wash);border-radius:4px}
+.hotelcard .sq{width:14px;height:14px;background:#1E4068;border-radius:2px;margin-top:4px}
+.hotelcard p{margin:3px 0 0;font-size:.88rem;color:var(--muted)}
+.plannote{font-size:.88rem;color:var(--muted);margin:10px 0 0}
+footer{max-width:1240px;margin:0 auto;padding:0 16px 32px;font-size:.8rem;color:var(--muted)}
 footer p{max-width:80ch;margin:0 0 6px}
+
+@media (max-width:900px){
+  main{grid-template-columns:1fr;gap:12px;padding-left:10px;padding-right:10px}
+  header{padding:16px 12px 6px}
+  .mapframe{position:relative;top:0;padding:4px}
+  #map{height:44vh;min-height:260px}
+  .panel{border-radius:4px}
+  .tabpane{padding:2px 12px 12px}
+}
+@media (max-width:420px){
+  .tabs button{padding:13px 12px 11px}
+  .item{grid-template-columns:46px minmax(0,1fr) 40px;gap:2px 8px}
+  .t{font-size:1.05rem}
+}
 </style>
 </head>
 <body>
 <header>
-  <h1>Pints and punchlines</h1>
-  <p class="lede">Birmingham on Saturday 3 October: real ale pubs from the Good Beer Guide and CAMRA's heritage list to visit in any order, a couple of extras, plus every Birmingham Comedy Festival show running that day. Tap a pin for details, and star shows to build your plan.</p>
+  <h1>Whitchurch Massif in Brum</h1>
+  <p class="dates">Birmingham · Sat 3 &amp; Sun 4 October</p>
   <ul class="legend" aria-label="Map key">
     <li><span class="key pub"></span>Pub</li>
-    <li><span class="key comedy"></span>Comedy venue</li>
-    <li><span class="key other"></span>Extras</li>
-    <li><span class="key hotel"></span>Hotel</li>
     <li><span class="key both"></span>Pub with comedy</li>
+    <li><span class="key alt"></span>Nearby pub</li>
+    <li><span class="key comedy"></span>Comedy</li>
+    <li><span class="key other"></span>Extras</li>
+    <li><span class="key brunch"></span>Brunch</li>
+    <li><span class="key hotel"></span>Hotel</li>
   </ul>
 </header>
 
 <main>
-  <section class="mapframe" aria-label="Map of pubs, comedy venues and hotel">
+  <section class="mapframe" aria-label="Map">
     <div class="mapinner">
       <div id="map"></div>
-      <div class="maperr" id="maperr" role="status">The map couldn't load. Check your connection, or use the Directions links in the list.</div>
-      <p class="maphint">Map data © OpenStreetMap contributors, tiles © CARTO. Tap a pin for details and shows.</p>
+      <div class="maperr" id="maperr" role="status">The map couldn't load. Check your connection, or use the Google Maps links in the list.</div>
+      <p class="maphint">© OpenStreetMap contributors © CARTO</p>
     </div>
   </section>
 
   <section class="panel">
-    <div class="tabs" role="tablist">
-      <button role="tab" id="tab-crawl" aria-controls="pane-crawl" aria-selected="true">Places</button>
-      <button role="tab" id="tab-comedy" aria-controls="pane-comedy" aria-selected="false">Comedy <span class="n" id="n-comedy"></span></button>
-      <button role="tab" id="tab-plan" aria-controls="pane-plan" aria-selected="false">My plan <span class="n" id="n-plan">0</span></button>
-    </div>
+    <div class="tabwrap"><div class="tabs" role="tablist" id="tabs" aria-label="Sections"></div></div>
 
-    <div class="tabpane" id="pane-crawl" role="tabpanel" aria-labelledby="tab-crawl">
-      <div class="hotelcard">
+    <div class="tabpane" id="pane-places" role="tabpanel">
+      <div class="hotelcard" id="hotelcard" hidden>
         <span class="sq" aria-hidden="true"></span>
         <div>
           <strong>Premier Inn Birmingham Central (Hagley Road)</strong>
-          <p>176-184 Hagley Rd, B16 9NY. About 2.2 miles west of the centre: a 10-minute taxi, or buses 9 and 126 along Hagley Road. The Craven Arms is the closest pub to it.</p>
-          <a class="dir" id="hoteldir" target="_blank" rel="noopener">Open in Google Maps</a>
+          <p>176-184 Hagley Rd, B16 9NY. About 2.2 miles west of the centre: a 10-minute taxi, or buses 9 and 126 along Hagley Road.</p>
+          <div class="acts"><button class="act" data-focus="hotel">Show on map</button><a class="act" id="hoteldir" target="_blank" rel="noopener">Google Maps</a></div>
         </div>
       </div>
-      <ol class="list" id="crawl-list"></ol>
+      <p class="subnote" id="places-sub"></p>
+      <ol class="list" id="places-list"></ol>
     </div>
 
-    <div class="tabpane" id="pane-comedy" role="tabpanel" aria-labelledby="tab-comedy" hidden>
+    <div class="tabpane" id="pane-comedy" role="tabpanel" hidden>
       <div class="filters">
         <div class="seg" role="group" aria-label="Price">
           <button data-price="all" aria-pressed="true">All</button>
-          <button data-price="free" aria-pressed="false">Pay what you want</button>
+          <button data-price="free" aria-pressed="false">Free</button>
           <button data-price="paid" aria-pressed="false">Ticketed</button>
         </div>
-        <label class="check"><input type="checkbox" id="nearOnly"> Within 5 min of a listed pub</label>
+        <label class="check"><input type="checkbox" id="nearOnly"> ≤ 5 min from a pub</label>
         <span class="venuechip" id="venuechip"><span id="venuechip-name"></span><button aria-label="Show all venues" id="venuechip-x">×</button></span>
       </div>
       <ol class="list" id="comedy-list"></ol>
     </div>
 
-    <div class="tabpane" id="pane-plan" role="tabpanel" aria-labelledby="tab-plan" hidden>
-      <p class="plannote">Starred shows, in time order. Most shows run about an hour, so starts less than an hour apart are flagged. Saved in this browser only.</p>
-      <ol class="list" id="plan-list"></ol>
+    <div class="tabpane" id="pane-plan" role="tabpanel" hidden>
+      <p class="plannote">Everything you've starred. Shows are in time order; starts less than an hour apart are flagged. Saved on this phone only.</p>
+      <div id="plan-list"></div>
     </div>
   </section>
 </main>
 
 <footer>
-  <p>Listings from the <a href="https://www.bhamcomfest.co.uk/whatson.html" target="_blank" rel="noopener">Birmingham Comedy Festival what's on page</a> and 2026 brochure. Shows the festival lists as cancelled for 3 October (Elaine Robertson, Madeleine Jimp Experience, Zain Iqbal) are left out. Line-ups change, so check the festival site before heading out.</p>
-  <p>Pub food notes are a guide only; check before relying on them. Pub status from CAMRA's Good Beer Guide and National Inventory of Historic Pub Interiors. Walking times are estimates.</p>
+  <p>Comedy listings from the <a href="https://www.bhamcomfest.co.uk/whatson.html" target="_blank" rel="noopener">Birmingham Comedy Festival</a>. Shows it lists as cancelled for 3 October (Elaine Robertson, Madeleine Jimp Experience, Zain Iqbal) are left out. Line-ups and opening hours change, so check before heading out.</p>
+  <p>Pub details from CAMRA's Good Beer Guide, National Inventory of Historic Pub Interiors and Birmingham branch pub guide. Walking times are estimates.</p>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
 <script>
 (function(){
 "use strict";
+const CARTO_KEY="cb1_41pb_1_7676c829042d1931bb89b816"; // restricted to whitchurchmassif.github.io
 
+/* cat: pub | extra | digbeth | nearhotel | brunch | venue | hotel ; camra = Birmingham CAMRA pub guide id */
 const places = {
-  hotel:     {pid:"ChIJzZnyZqq9cEgRKFi7DSlcVLo", name:"Premier Inn (Hagley Road)", addr:"176-184 Hagley Rd, B16 9NY", lat:52.4712, lng:-1.9401, hotel:true},
-  craven:    {pid:"ChIJMcSwlYq8cEgRDlCpiEzSs_Y", name:"Craven Arms", addr:"47 Upper Gough St, B1 1JL", lat:52.47508, lng:-1.90371, crawl:1, gbg:true, heritage:false, food:"Cobs and pork pies",
-              note:"Grade II listed for its 1906 blue-and-gold tiled front. Black Country Ales house with around nine cask lines, cobs and pork pies."},
-  ojs:       {pid:"ChIJ-YQdrYy8cEgRBdRWYNBUMcE", name:"Old Joint Stock", addr:"4 Temple Row West, B2 5NY", lat:52.48135, lng:-1.90005, crawl:2, gbg:false, heritage:false, food:"Full pub menu",
-              note:"Fuller's pub in an 1862 former bank with a domed ceiling and island bar. Hosts a festival show at 2.30pm."},
-  wellington:{pid:"ChIJ13eIPYy8cEgRKXDlQBsiK_0", name:"The Wellington", addr:"37 Bennetts Hill, B2 5SN", lat:52.48063, lng:-1.90053, crawl:3, gbg:true, heritage:false, food:"No kitchen: bring your own or order in, plates provided",
-              note:"Birmingham's cask ale institution: around 27 handpulls over two floors and a roof terrace. Three free festival shows here."},
-  goodintent:{pid:"ChIJNwbaHgq9cEgRkmL57EdnHX8", name:"The Good Intent", addr:"32-33 Great Western Arcade, B2 5HU", lat:52.48187, lng:-1.89739, crawl:4, gbg:true, heritage:false,
-              note:"Craddock's brewery bar in the Victorian arcade. Own cask ales plus guests; profits go to charity."},
-  woodman:   {pid:"ChIJ6b4zbwC9cEgRuL0K2wBFGCA", name:"The Woodman", addr:"1 Curzon St, B4 7XG", lat:52.48170, lng:-1.88677, crawl:5, gbg:true, heritage:true,
-              note:"Three-star National Inventory interior from 1897, Minton tiling, reopened in 2024. The standout heritage stop."},
-  anchor:    {pid:"ChIJ67oWZIe8cEgRrsmgHnFl6vg", name:"The Anchor, Digbeth", addr:"308 Bradford St, B5 6ET", lat:52.47449, lng:-1.88846, crawl:6, gbg:true, heritage:true,
-              note:"1902 James & Lister Lea pub on the National Inventory, with its timber and glass screen. Taxis are easy from Digbeth Coach Station nearby."},
-  queens:    {name:"The Queens Arms", addr:"150 Newhall St, B3 1RY", lat:52.48368, lng:-1.90661, crawl:7, gbg:false, heritage:false, pid:"ChIJAYGrsPK8cEgRJk7_AeMe_rU", food:"No kitchen: bring your own food",
-              note:"Friendly Jewellery Quarter-edge pub with a good beer range, board games and bench tables. Opens 10am Saturdays."},
-  indianbrew:{name:"Indian Brewery Taproom", addr:"1 Mary Ann St, B3 1RL", lat:52.48592, lng:-1.90382, other:true, pid:"ChIJ08NVFji9cEgRXV-WrUHxL8k", food:"Pizzas and Indian dishes",
-              note:"Brewery taproom near Snow Hill with their own beers and Indian-twist pizzas. Opens 12pm Saturdays."},
-  golffang:  {name:"Golf Fang Birmingham", addr:"The Custard Factory, Gibb St, B9 4AA", lat:52.47594, lng:-1.88338, other:true, pid:"ChIJd6-vWIC8cEgRIZLs1KKcGBE", food:"Food served",
-              note:"Crazy golf and cocktail bar in the Custard Factory, Digbeth, about 5 min walk from The Anchor. Open 12pm to 1am Saturdays; book ahead, it gets busy."},
-  cherry:    {name:"Cherry Reds", addr:"88-92 John Bright St, B1 1BN", lat:52.4768, lng:-1.9017},
-  victoria:  {name:"The Victoria", addr:"48 John Bright St, B1 1BN", lat:52.4776, lng:-1.9009},
-  trades:    {name:"1000 Trades JQ", addr:"16 Frederick St, B1 3HE", lat:52.4859, lng:-1.9097},
-  craft:     {name:"Craft & Culture", addr:"70-80 Vyse St, B18 6HA", lat:52.4892, lng:-1.9108},
-  glee:      {name:"The Glee Club", addr:"The Arcadian, 70 Hurst St, B5 4TD", lat:52.4744, lng:-1.8956},
-  townhall:  {name:"Town Hall", addr:"Victoria Square, B3 3DQ", lat:52.4797, lng:-1.9038},
-  bmag:      {name:"Birmingham Museum & Art Gallery", addr:"Chamberlain Square, B3 3DH", lat:52.4808, lng:-1.9032},
-  crescent:  {name:"The Crescent Theatre", addr:"Sheepcote St, Brindleyplace, B16 8AE", lat:52.4766, lng:-1.9155},
-  oldrep:    {name:"Old Rep Theatre", addr:"Station St, B5 4DY", lat:52.4761, lng:-1.8967}
+  hotel:      {cat:"hotel", name:"Premier Inn (Hagley Road)", addr:"176-184 Hagley Rd, B16 9NY", lat:52.4712, lng:-1.9401, pid:"ChIJzZnyZqq9cEgRKFi7DSlcVLo"},
+  craven:     {cat:"pub", name:"Craven Arms", addr:"47 Upper Gough St, B1 1JL", lat:52.47508, lng:-1.90371, pid:"ChIJMcSwlYq8cEgRDlCpiEzSs_Y", camra:130711, gbg:true,
+               food:"Cobs, pork pies and sausage rolls", note:"Grade II listed, with a blue-and-gold tiled front. Black Country Ales house with changing West Midlands guest casks. Closest pub to New Street."},
+  ojs:        {cat:"pub", name:"Old Joint Stock", addr:"4 Temple Row West, B2 5NY", lat:52.48135, lng:-1.90005, pid:"ChIJ-YQdrYy8cEgRBdRWYNBUMcE", camra:130681,
+               food:"Full pub menu", note:"Fuller's pub in a Victorian former bank with a domed ceiling and island bar. Best bet for a sit-down lunch near New Street."},
+  wellington: {cat:"pub", name:"The Wellington", addr:"37 Bennetts Hill, B2 5SN", lat:52.48063, lng:-1.90053, pid:"ChIJ13eIPYy8cEgRKXDlQBsiK_0", camra:130692, gbg:true,
+               food:"Cobs only; bring your own food, plates provided", note:"Birmingham's cask institution: over 25 handpulls across two floors and a roof terrace. Bundobust (Indian street food) is a few doors up."},
+  goodintent: {cat:"pub", name:"The Good Intent", addr:"32-33 Great Western Arcade, B2 5HU", lat:52.48187, lng:-1.89739, pid:"ChIJNwbaHgq9cEgRkmL57EdnHX8", camra:131260, gbg:true,
+               food:"Sandwiches on the bar", note:"Craddock's not-for-profit bar in the Victorian arcade opposite Snow Hill. Six handpumps; profits go to charity."},
+  woodman:    {cat:"pub", name:"The Woodman", addr:"1 Curzon St, B4 7XG", lat:52.48170, lng:-1.88677, pid:"ChIJ6b4zbwC9cEgRuL0K2wBFGCA", camra:130887, gbg:true, heritage:true,
+               food:"Pies, sandwiches, pizzas, cheese boards", note:"Three-star historic interior from 1897, reopened in 2024. Draught Bass and up to nine casks."},
+  anchor:     {cat:"pub", name:"The Anchor", addr:"308 Bradford St, B5 6ET", lat:52.47449, lng:-1.88846, pid:"ChIJ67oWZIe8cEgRrsmgHnFl6vg", camra:130690, gbg:true, heritage:true,
+               note:"1902 multi-room pub by James & Lister Lea, on CAMRA's National Inventory. Up to four handpulls."},
+  queens:     {cat:"pub", name:"The Queens Arms", addr:"150 Newhall St, B3 1RY", lat:52.48368, lng:-1.90661, pid:"ChIJAYGrsPK8cEgRJk7_AeMe_rU", camra:130689,
+               food:"No kitchen; bring your own", note:"Grade II Victorian corner pub with tiled signage outside and a heritage central bar. Board games; opens 10am Saturdays."},
+  indianbrew: {cat:"extra", name:"Indian Brewery Taproom", addr:"1 Mary Ann St, B3 1RL", lat:52.48592, lng:-1.90382, pid:"ChIJ08NVFji9cEgRXV-WrUHxL8k", camra:260079,
+               food:"Indian-twist pizzas", note:"Big beer hall in a former engineering works, brewing on site. Opens 12pm Saturdays; busy when sport is on."},
+  golffang:   {cat:"extra", name:"Golf Fang", addr:"The Custard Factory, Gibb St, B9 4AA", lat:52.47594, lng:-1.88338, pid:"ChIJd6-vWIC8cEgRIZLs1KKcGBE",
+               food:"Food served", note:"Crazy golf and cocktail bar. Open 12pm to 1am Saturdays; book ahead."},
+  whiteswan:  {cat:"digbeth", name:"White Swan", addr:"276 Bradford St, B5 6EP", lat:52.47374, lng:-1.88631, pid:"ChIJ2-J5K-W9cEgRCGvEetFUWSQ", camra:130707, heritage:true,
+               note:"Two-roomed Victorian pub with a nationally important interior and classic tiling. Hours can vary and it may close early if quiet. 5 min walk from Golf Fang."},
+  spotteddog: {cat:"digbeth", name:"The Spotted Dog", addr:"104 Warwick St, B12 0NH", lat:52.47362, lng:-1.88297, pid:"ChIJf5DQ6n-8cEgRiz86YEZ9PuE", camra:130719,
+               note:"Multi-roomed traditional Irish pub, family-run since 1985. Cheap dark mild, candlelit rooms and a big covered garden. Opens 12.30pm Saturdays."},
+  oldcrown:   {cat:"digbeth", name:"The Old Crown", addr:"188 High St Deritend, B12 0LD", lat:52.47477, lng:-1.88356, pid:"ChIJfa0_eoC8cEgR-aHYI6Nfidc",
+               food:"Full menu", note:"Timber-framed medieval building, often billed as Birmingham's oldest pub. Low beams and a rabbit warren of rooms. 2 min from Golf Fang."},
+  ruin:       {cat:"digbeth", name:"The Ruin", addr:"92 Floodgate St, B5 5SR", lat:52.47648, lng:-1.88384, pid:"ChIJ1wdg-YC8cEgRyxctX3MBueo", camra:131234,
+               food:"Burgers, nachos, loaded fries", note:"Quirky pub with cask, keg and a roof terrace. Opens 12pm Saturdays."},
+  vine:       {cat:"nearhotel", name:"The Vine Inn", addr:"92 Ruston St, B16 8BB", lat:52.47512, lng:-1.92010, pid:"ChIJwd2vafi8cEgR2nJ_atOpRw0", camra:130812,
+               food:"All-day menu", note:"Traditional corner pub near Five Ways that prides itself on real ale. About 25 min walk or a short taxi from the hotel; handy on the way into town."},
+  whitehorse: {cat:"nearhotel", name:"White Horse, Harborne", addr:"2 York St, B17 0HG", lat:52.45919, lng:-1.94651, pid:"ChIJM3SbuLu9cEgRrdjBe_pAdJA", camra:130723,
+               note:"Two-room community pub with Ostlers beers brewed at the back, up to six handpulls. About 20 min walk from the hotel."},
+  physician:  {cat:"nearhotel", name:"The Physician", addr:"Harborne Rd, B15 3DH", lat:52.47041, lng:-1.92417, pid:"ChIJhUTZK1S8cEgROFSob0uKz_M", camra:131225,
+               food:"Full menu", note:"Upmarket multi-room pub in a grand former medical library. About 15 min walk from the hotel."},
+  edgcafe:    {cat:"brunch", name:"Edgbaston Cafe", addr:"195-196 Monument Rd, B16 8UU", lat:52.47280, lng:-1.93091, pid:"ChIJh4wK3Nu9cEgRf4g61mMqcQ4",
+               note:"Closest option: a proper greasy-spoon full English, good value. About 10 min walk. Sun 7.30am-3.30pm."},
+  bostontea:  {cat:"brunch", name:"Boston Tea Party", addr:"Edgbaston Village, Harborne Rd, B15 3AA", lat:52.47065, lng:-1.92311, pid:"ChIJY32-iFa8cEgRggApI8A9oKk",
+               note:"Reliable all-day brunch chain with good coffee, next to The Physician. About 15 min walk. Sun 9am-4pm."},
+  highfield:  {cat:"brunch", name:"The High Field", addr:"22 Highfield Rd, B15 3DP", lat:52.46866, lng:-1.92248, pid:"ChIJ87kfiVaUcEgRDdlgpBVdeVI", camra:131118,
+               note:"Art deco pub-restaurant that does breakfast, with cask ale if you fancy one. About 15 min walk. Sun from 8am."},
+  plough:     {cat:"brunch", name:"The Plough, Harborne", addr:"21 High St, Harborne, B17 9NT", lat:52.46108, lng:-1.94356, pid:"ChIJ1S2ylLq9cEgRvLxIq-KrD4w", camra:130727,
+               note:"Popular pub brunch at the top of Harborne High Street, with a nice garden. Book ahead. About 15 min walk. Sun from 9am."},
+  paul41:     {cat:"brunch", name:"Paul at No 41", addr:"41 High St, Harborne, B17 9NT", lat:52.46081, lng:-1.94413, pid:"ChIJxalciNa9cEgRfu2OWqBMmqg",
+               note:"Small, highly rated independent café with build-your-own breakfasts. About 15 min walk. Sun 10am-3pm."},
+  cherry:     {cat:"venue", name:"Cherry Reds", addr:"88-92 John Bright St, B1 1BN", lat:52.4768, lng:-1.9017, camra:130886},
+  victoria:   {cat:"venue", name:"The Victoria", addr:"48 John Bright St, B1 1BN", lat:52.4776, lng:-1.9009, camra:130693},
+  trades:     {cat:"venue", name:"1000 Trades JQ", addr:"16 Frederick St, B1 3HE", lat:52.4859, lng:-1.9097, camra:131137},
+  craft:      {cat:"venue", name:"Craft & Culture", addr:"70-80 Vyse St, B18 6HA", lat:52.4892, lng:-1.9108},
+  glee:       {cat:"venue", name:"The Glee Club", addr:"The Arcadian, 70 Hurst St, B5 4TD", lat:52.4744, lng:-1.8956},
+  townhall:   {cat:"venue", name:"Town Hall", addr:"Victoria Square, B3 3DQ", lat:52.4797, lng:-1.9038},
+  bmag:       {cat:"venue", name:"Birmingham Museum & Art Gallery", addr:"Chamberlain Square, B3 3DH", lat:52.4808, lng:-1.9032},
+  crescent:   {cat:"venue", name:"The Crescent Theatre", addr:"Sheepcote St, Brindleyplace, B16 8AE", lat:52.4766, lng:-1.9155},
+  oldrep:     {cat:"venue", name:"Old Rep Theatre", addr:"Station St, B5 4DY", lat:52.4761, lng:-1.8967}
 };
+const SECTIONS=[
+  ["pub","Pubs","Good Beer Guide and heritage pubs, in any order."],
+  ["digbeth","Near Golf Fang","Digbeth pubs within a few minutes' walk of the Custard Factory."],
+  ["extra","Extras","Brewery taproom and crazy golf."],
+  ["nearhotel","Near hotel","For a pint without going into town."],
+  ["brunch","Sunday brunch","All closer to the hotel than the city centre."]
+];
+const TABS=[["pub","Pubs"],["comedy","Comedy"],["digbeth","Near Golf Fang"],["extra","Extras"],["nearhotel","Near hotel"],["brunch","Brunch"],["plan","My plan"]];
+const isPlaceTab = t => SECTIONS.some(([c])=>c===t);
 
 const U = "https://www.bhamcomfest.co.uk/";
 const events = [
@@ -925,131 +312,143 @@ const $ = s => document.querySelector(s);
 const el = (tag, attrs={}, html="") => { const n=document.createElement(tag); for(const k in attrs) n.setAttribute(k,attrs[k]); if(html) n.innerHTML=html; return n; };
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const mins = t => { if(!t) return 9999; const [h,m]=t.split(":").map(Number); return h*60+m; };
-const fmt = t => { if(!t) return "All day"; let [h,m]=t.split(":").map(Number); const ap=h>=12?"pm":"am"; h=h%12||12; return m?`${h}.${String(m).padStart(2,"0")}${ap}`:`${h}${ap}`; };
+const fmt = t => { if(!t) return "Varies"; let [h,m]=t.split(":").map(Number); const ap=h>=12?"pm":"am"; h=h%12||12; return m?`${h}.${String(m).padStart(2,"0")}${ap}`:`${h}${ap}`; };
 const isFree = e => e.price==="PWYW";
 function dist(a,b){const R=6371000,r=Math.PI/180;const dLat=(b.lat-a.lat)*r,dLng=(b.lng-a.lng)*r;const x=Math.sin(dLat/2)**2+Math.cos(a.lat*r)*Math.cos(b.lat*r)*Math.sin(dLng/2)**2;return 2*R*Math.asin(Math.sqrt(x));}
 const walkMin = m => Math.max(1, Math.round(m*1.25/80));
-const crawlPubs = Object.entries(places).filter(([,p])=>p.crawl).sort((a,b)=>a[1].lng-b[1].lng);
+const pubs = Object.entries(places).filter(([,p])=>p.cat==="pub");
 function nearestPub(vid){
-  const v=places[vid]; if(v.crawl) return {id:vid, min:0};
-  let best=null; for(const [id,p] of crawlPubs){const d=dist(v,p); if(!best||d<best.d) best={id,d};}
+  const v=places[vid]; if(v.cat==="pub") return {id:vid,min:0};
+  let best=null; for(const [id,p] of pubs){const d=dist(v,p); if(!best||d<best.d) best={id,d};}
   return {id:best.id, min:walkMin(best.d)};
 }
-const dirURL = p => "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(p.name+", "+p.addr+", Birmingham")+(p.pid?"&query_place_id="+p.pid:"");
+const hasShows = id => events.some(e=>e.v===id);
+const gmaps = p => "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(p.name+", "+p.addr+", Birmingham")+(p.pid?"&query_place_id="+p.pid:"");
+const camra = p => p.camra ? "https://birmingham.camra.org.uk/viewnode.php?id="+p.camra : null;
+const ext = (href,label) => `<a class="act" href="${href}" target="_blank" rel="noopener">${label}</a>`;
+function placeActs(id,p){
+  return `<div class="acts"><button class="act" data-focus="${id}">Show on map</button>${ext(gmaps(p),"Google Maps")}${camra(p)?ext(camra(p),"CAMRA"):""}</div>`;
+}
 
-/* ---------- state ---------- */
+/* ---------- plan state ---------- */
 const KEY="brum-pints-punchlines-plan";
 let plan=new Set();
-try{ const raw=localStorage.getItem(KEY); if(raw) plan=new Set(JSON.parse(raw)); }catch(e){}
+try{ const raw=localStorage.getItem(KEY); if(raw) plan=new Set(JSON.parse(raw).map(k=>k.includes(":")?k:"e:"+k)); }catch(e){}
 function savePlan(){ try{ localStorage.setItem(KEY, JSON.stringify([...plan])); }catch(e){} }
-const state={tab:"crawl", price:"all", near:false, venue:null};
+const starBtn = (key,label) => `<button class="star" data-star="${key}" aria-pressed="${plan.has(key)}" aria-label="Add ${esc(label)} to my plan">★</button>`;
+function toggleStar(key){
+  plan.has(key)?plan.delete(key):plan.add(key); savePlan();
+  const on=plan.has(key);
+  document.querySelectorAll(`[data-star="${key}"]`).forEach(b=>{ b.setAttribute("aria-pressed",on); if(b.classList.contains("popstar")) b.textContent=on?"★ In my plan":"☆ Add to plan"; });
+  $("#n-plan").textContent=plan.size;
+  if(state.tab==="plan") renderPlan();
+}
+const state={tab:"pub", price:"all", near:false, venue:null};
 
 /* ---------- map ---------- */
-const CARTO_KEY="cb1_41pb_1_7676c829042d1931bb89b816"; // restricted to whitchurchmassif.github.io
-const markers={};
-let map=null;
-function pinHTML(id,p){
-  const shows=events.some(e=>e.v===id);
-  if(p.hotel) return {cls:"hotel",html:"H"};
-  if(p.crawl) return {cls:shows?"both":"pub",html:""};
-  if(p.other) return {cls:"other",html:""};
-  return {cls:"comedy",html:"<span>★</span>"};
+const markers={}; let map=null;
+function pinClass(id,p){
+  if(p.cat==="hotel") return ["hotel","H"];
+  if(p.cat==="pub") return [hasShows(id)?"both":"pub",""];
+  if(p.cat==="digbeth"||p.cat==="nearhotel") return ["alt",""];
+  if(p.cat==="extra") return ["other",""];
+  if(p.cat==="brunch") return ["brunch",""];
+  return ["comedy",""];
 }
 function popupHTML(id){
   const p=places[id], shows=events.filter(e=>e.v===id).sort((a,b)=>mins(a.t)-mins(b.t));
   let h=`<strong>${esc(p.name)}</strong><p>${esc(p.addr)}</p>`;
-  if(p.crawl||p.other) h+=`<p>${p.gbg?"Good Beer Guide. ":""}${p.heritage?"Historic pub interior. ":""}${p.food?"Food: "+esc(p.food)+".":""}</p>`;
+  const tags=[p.gbg&&"Good Beer Guide",p.heritage&&"Historic interior",p.food&&("Food: "+p.food)].filter(Boolean);
+  if(tags.length) h+=`<p>${esc(tags.join(". "))}</p>`;
   if(shows.length) h+=`<p>${shows.map(e=>`<b>${fmt(e.t)}</b> ${esc(e.title)}`).join("<br>")}</p>`;
-  h+=`<p><a href="${dirURL(p)}" target="_blank" rel="noopener">Open in Google Maps</a></p>`;
+  h+=`<p><a href="${gmaps(p)}" target="_blank" rel="noopener">Google Maps</a>${camra(p)?` · <a href="${camra(p)}" target="_blank" rel="noopener">CAMRA</a>`:""}</p>`;
+  if(p.cat!=="venue"&&p.cat!=="hotel"){ const k="p:"+id; h+=`<button class="popstar" data-star="${k}" aria-pressed="${plan.has(k)}">${plan.has(k)?"★ In my plan":"☆ Add to plan"}</button>`; }
   return h;
 }
 function drawMap(){
   if(!window.L){ $("#maperr").classList.add("on"); return; }
-  map=L.map("map",{scrollWheelZoom:false,zoomControl:true});
+  map=L.map("map",{scrollWheelZoom:false,tap:true});
   const dark=window.matchMedia("(prefers-color-scheme: dark)").matches;
   const tiles=L.tileLayer(`https://{s}.basemaps.cartocdn.com/${dark?"dark_all":"rastertiles/voyager"}/{z}/{x}/{y}{r}.png?key=${CARTO_KEY}`,{
     subdomains:"abcd",maxZoom:19,
-    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
   }).addTo(map);
   let errs=0; tiles.on("tileerror",()=>{ if(++errs>3) $("#maperr").classList.add("on"); });
-  const all=[];
+  const core=[];
   for(const [id,p] of Object.entries(places)){
-    const k=pinHTML(id,p);
-    const icon=L.divIcon({className:"",html:`<div class="pin ${k.cls}">${k.html}</div>`,iconSize:[30,30],iconAnchor:k.cls==="comedy"?[15,30]:[15,15],popupAnchor:[0,-16]});
-    const m=L.marker([p.lat,p.lng],{icon,title:p.name,keyboard:true}).addTo(map).bindPopup(popupHTML(id),{maxWidth:280});
-    m.on("click",()=>selectPlace(id,true));
-    markers[id]=m; all.push([p.lat,p.lng]);
+    const [cls,txt]=pinClass(id,p);
+    const icon=L.divIcon({className:"",html:`<div class="pin ${cls}">${txt}</div>`,iconSize:[28,28],iconAnchor:cls==="comedy"?[14,28]:[14,14],popupAnchor:[0,-16]});
+    markers[id]=L.marker([p.lat,p.lng],{icon,title:p.name,keyboard:true}).addTo(map).bindPopup(()=>popupHTML(id),{maxWidth:260});
+    markers[id].on("click",()=>selectPlace(id));
+    if(p.cat==="pub"||p.cat==="venue"||p.cat==="extra") core.push([p.lat,p.lng]);
   }
-  map.fitBounds(all,{padding:[30,30]});
+  map.fitBounds(core,{padding:[24,24]});
 }
 function highlight(ids){
-  for(const id in markers){
-    const el=markers[id].getElement(); if(!el) continue;
-    const pin=el.querySelector(".pin"); pin && pin.classList.toggle("sel", !!ids && ids.includes(id));
-    if(ids && ids.length===1 && ids[0]===id) markers[id].setZIndexOffset(1000); else markers[id].setZIndexOffset(0);
-  }
+  for(const id in markers){ const e=markers[id].getElement(); const pin=e&&e.querySelector(".pin"); pin&&pin.classList.toggle("sel",!!ids&&ids.includes(id)); }
 }
-function dimTo(ids){
-  for(const id in markers){ const el=markers[id].getElement(); el && el.classList.toggle("dim", !!ids && !ids.includes(id)); }
-}
-function focusPlace(id){
+function focusPlace(id,scroll){
+  highlight([id]);
   if(!map||!markers[id]) return;
   map.setView(markers[id].getLatLng(), Math.max(map.getZoom(),16), {animate:true});
   markers[id].openPopup();
+  if(scroll && window.matchMedia("(max-width:900px)").matches) $(".mapframe").scrollIntoView({block:"start",behavior:"smooth"});
 }
-function selectPlace(id,fromMap){
-  const p=places[id];
+function selectPlace(id){
   highlight([id]);
-  if(p.hotel || ((p.crawl||p.other) && !events.some(e=>e.v===id))){
-    setTab("crawl");
-    const row=document.getElementById("row-"+id) || document.querySelector(".hotelcard");
-    row && row.scrollIntoView({block:"nearest",behavior:"smooth"});
-    return;
-  }
-  state.venue=id; setTab("comedy"); renderComedy();
+  if(hasShows(id) && places[id].cat==="venue"){ state.venue=id; setTab("comedy"); return; }
+  if(id==="hotel") return;
+  const cat=places[id].cat; if(!isPlaceTab(cat)) return;
+  if(state.tab!==cat) setTab(cat);
+  const row=document.getElementById("row-"+id);
+  if(row){ row.classList.remove("flash"); void row.offsetWidth; row.classList.add("flash"); }
 }
-
 
 /* ---------- lists ---------- */
-function venueBtn(vid){ return `<button class="v" data-venue="${vid}">${esc(places[vid].name)}</button> <a class="dir" href="${dirURL(places[vid])}" target="_blank" rel="noopener">map</a>`; }
-
-function placeRow(id,p,cls){
+function placeRow(id,p){
   const shows=events.filter(e=>e.v===id);
-  const li=el("li",{class:"item",id:"row-"+id});
-  li.innerHTML=`<div class="pubnum ${cls}" aria-hidden="true"></div>
-    <div><h3><a href="${dirURL(p)}" target="_blank" rel="noopener">${esc(p.name)}</a></h3>
+  const li=el("li",{class:"item place",id:"row-"+id});
+  const dotc=p.cat==="pub"?"pub":p.cat==="extra"?"other":p.cat==="brunch"?"brunch":"alt";
+  li.innerHTML=`<span class="dot ${dotc}" aria-hidden="true"></span>
+    <div><h3><a href="${gmaps(p)}" target="_blank" rel="noopener">${esc(p.name)}</a></h3>
       <p class="meta">${p.gbg?'<span class="badge b-gbg">Good Beer Guide</span>':''}${p.heritage?'<span class="badge b-her">Historic interior</span>':''}${esc(p.addr)}</p>
       <p class="note">${esc(p.note)}</p>
       ${p.food?`<p class="meta"><span class="badge b-food">Food</span>${esc(p.food)}</p>`:""}
       ${shows.length?`<p class="meta">Comedy here: ${shows.map(e=>`${fmt(e.t)} ${esc(e.title.split(":")[0])}`).join(", ")}</p>`:""}
+      ${placeActs(id,p)}
     </div>
-    <button class="dir v" data-venue="${id}" style="background:none;border:0;cursor:pointer;color:var(--tile);text-decoration:underline">Show</button>`;
+    ${starBtn("p:"+id,p.name)}`;
   return li;
 }
-function renderCrawl(){
-  const ol=$("#crawl-list"); ol.innerHTML="";
-  for(const [id,p] of crawlPubs) ol.appendChild(placeRow(id,p,""));
-  const extras=Object.entries(places).filter(([,p])=>p.other);
-  const hd=el("li",{},'<h2 class="subhead">Also on the list</h2>'); ol.appendChild(hd);
-  for(const [id,p] of extras) ol.appendChild(placeRow(id,p,"other"));
-  $("#hoteldir").href=dirURL(places.hotel);
+function renderPlaces(cat){
+  const sec=SECTIONS.find(([c])=>c===cat);
+  $("#places-sub").textContent=sec[2];
+  $("#hotelcard").hidden = cat!=="nearhotel" && cat!=="brunch";
+  $("#hoteldir").href=gmaps(places.hotel);
+  const ol=$("#places-list"); ol.innerHTML="";
+  Object.entries(places).filter(([,p])=>p.cat===cat).forEach(([id,p])=>ol.appendChild(placeRow(id,p)));
+}
+function buildTabs(){
+  const bar=$("#tabs"); bar.innerHTML="";
+  for(const [k,label] of TABS){
+    const n = k==="comedy" ? events.length : k==="plan" ? plan.size : Object.values(places).filter(p=>p.cat===k).length;
+    bar.appendChild(el("button",{role:"tab",id:"tab-"+k,"data-tab":k,"aria-selected":String(k===state.tab)},`${esc(label)} <span class="n"${k==="plan"?' id="n-plan"':''}>${n}</span>`));
+  }
 }
 
 function eventRow(e, opts={}){
-  const np=nearestPub(e.v), onCrawl=!!places[e.v].crawl;
+  const v=places[e.v], np=nearestPub(e.v);
+  const where = v.cat==="pub" ? `<span class="badge b-pub">In one of the pubs</span>` : `${np.min} min walk from ${esc(places[np.id].name)}`;
   const li=el("li",{class:"item"});
-  const where = onCrawl ? `<span class="badge b-pub">In one of the pubs</span>` :
-    `${np.min} min walk from ${esc(places[np.id].name)}`;
-  li.innerHTML=`<div class="t">${fmt(e.t)}${e.t?"":""}<small>${esc(e.price)}</small></div>
+  li.innerHTML=`<div class="t">${fmt(e.t)}<small>${esc(e.price)}</small></div>
     <div><h3><a href="${e.url}" target="_blank" rel="noopener">${esc(e.title)}</a></h3>
-      <p class="meta">${isFree(e)?'<span class="badge b-free">Free, donate on exit</span>':''}${opts.clash?'<span class="badge b-warn">Clashes with previous</span>':''}${venueBtn(e.v)}</p>
+      <p class="meta">${isFree(e)?'<span class="badge b-free">Free, donate on exit</span>':''}${opts.clash?'<span class="badge b-warn">Clashes with previous</span>':''}<strong style="color:var(--ink);font-weight:600">${esc(v.name)}</strong></p>
       <p class="meta">${where}${e.extra?". "+esc(e.extra):""}</p>
+      <div class="acts"><button class="act" data-focus="${e.v}">Show on map</button>${state.tab==="comedy"&&!state.venue?`<button class="act" data-venue="${e.v}">All shows here</button>`:""}${ext(gmaps(v),"Google Maps")}${camra(v)?ext(camra(v),"CAMRA"):""}</div>
     </div>
-    <button class="star" aria-pressed="${plan.has(e.id)}" aria-label="${plan.has(e.id)?"Remove from":"Add to"} my plan: ${esc(e.title)}" data-star="${e.id}">★</button>`;
-  li.addEventListener("mouseenter",()=>highlight([e.v]));
+    ${starBtn("e:"+e.id,e.title)}`;
   return li;
 }
-
 function filteredEvents(){
   return events.filter(e=>{
     if(state.venue && e.v!==state.venue) return false;
@@ -1059,77 +458,60 @@ function filteredEvents(){
     return true;
   }).sort((a,b)=>mins(a.t)-mins(b.t));
 }
-
 function renderComedy(){
   const list=filteredEvents(), ol=$("#comedy-list"); ol.innerHTML="";
-  if(!list.length){ ol.appendChild(el("li",{class:"empty"},"No shows match these filters. Try switching the price filter back to All.")); }
+  if(!list.length) ol.appendChild(el("li",{class:"empty"},"No shows match these filters."));
   list.forEach(e=>ol.appendChild(eventRow(e)));
-  const chip=$("#venuechip");
-  chip.classList.toggle("on", !!state.venue);
+  $("#venuechip").classList.toggle("on",!!state.venue);
   $("#venuechip-name").textContent = state.venue ? "At "+places[state.venue].name : "";
-  $("#n-comedy").textContent=events.length;
-  const vids=[...new Set(list.map(e=>e.v))];
-  if(state.tab==="comedy") { dimTo(state.venue?[state.venue]:vids.concat(["hotel"])); highlight(state.venue?[state.venue]:null); }
 }
-
 function renderPlan(){
-  const items=events.filter(e=>plan.has(e.id)).sort((a,b)=>mins(a.t)-mins(b.t));
-  const ol=$("#plan-list"); ol.innerHTML="";
-  if(!items.length) ol.appendChild(el("li",{class:"empty"},"Nothing starred yet. Open the Comedy tab and tap the star on any show."));
-  let prev=null;
-  items.forEach(e=>{
-    const clash = prev && e.t && prev.t && mins(e.t)-mins(prev.t)<60;
-    ol.appendChild(eventRow(e,{clash}));
-    if(e.t) prev=e;
-  });
-  $("#n-plan").textContent=plan.size;
-  if(state.tab==="plan"){ const vids=[...new Set(items.map(e=>e.v))]; dimTo(vids.length?vids.concat(["hotel"]):null); highlight(null); }
+  const box=$("#plan-list"); box.innerHTML="";
+  const evs=events.filter(e=>plan.has("e:"+e.id)).sort((a,b)=>mins(a.t)-mins(b.t));
+  const pls=SECTIONS.flatMap(([cat])=>Object.entries(places).filter(([id,p])=>p.cat===cat&&plan.has("p:"+id)));
+  if(!evs.length&&!pls.length){ box.appendChild(el("p",{class:"empty"},"Nothing starred yet. Tap ★ on any place or show.")); return; }
+  if(pls.length){
+    box.appendChild(el("h2",{class:"subhead"},"Places"));
+    const ol=el("ol",{class:"list"}); pls.forEach(([id,p])=>ol.appendChild(placeRow(id,p))); box.appendChild(ol);
+  }
+  if(evs.length){
+    box.appendChild(el("h2",{class:"subhead"},"Saturday shows"));
+    const ol=el("ol",{class:"list"}); let prev=null;
+    evs.forEach(e=>{ const clash=prev&&e.t&&prev.t&&mins(e.t)-mins(prev.t)<60; ol.appendChild(eventRow(e,{clash})); if(e.t) prev=e; });
+    box.appendChild(ol);
+  }
 }
-
 function setTab(t){
   state.tab=t;
-  ["crawl","comedy","plan"].forEach(k=>{
-    $("#tab-"+k).setAttribute("aria-selected", k===t);
-    $("#pane-"+k).hidden = k!==t;
-  });
-  if(t==="crawl"){ dimTo(null); }
+  document.querySelectorAll("#tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));
+  const cur=$("#tab-"+t), bar=$("#tabs"); if(cur&&bar.scrollTo) bar.scrollTo({left:cur.offsetLeft-(bar.clientWidth-cur.offsetWidth)/2,behavior:"smooth"});
+  $("#pane-places").hidden=!isPlaceTab(t); $("#pane-comedy").hidden=t!=="comedy"; $("#pane-plan").hidden=t!=="plan";
+  if(isPlaceTab(t)) renderPlaces(t);
   if(t==="comedy") renderComedy();
   if(t==="plan") renderPlan();
 }
 
 /* ---------- events ---------- */
-document.querySelector(".tabs").addEventListener("click",ev=>{
+$("#tabs").addEventListener("click",ev=>{
   const b=ev.target.closest("button[role=tab]"); if(!b) return;
-  if(b.id==="tab-comedy") state.venue=null;
-  setTab(b.id.replace("tab-","")); highlight(null);
+  if(b.dataset.tab==="comedy") state.venue=null;
+  setTab(b.dataset.tab); highlight(null);
 });
-document.querySelector(".seg").addEventListener("click",ev=>{
+$(".seg").addEventListener("click",ev=>{
   const b=ev.target.closest("button"); if(!b) return;
   state.price=b.dataset.price;
-  document.querySelectorAll(".seg button").forEach(x=>x.setAttribute("aria-pressed", x===b));
+  document.querySelectorAll(".seg button").forEach(x=>x.setAttribute("aria-pressed",x===b));
   renderComedy();
 });
 $("#nearOnly").addEventListener("change",ev=>{state.near=ev.target.checked; renderComedy();});
 $("#venuechip-x").addEventListener("click",()=>{state.venue=null; highlight(null); renderComedy();});
 document.addEventListener("click",ev=>{
-  const star=ev.target.closest("[data-star]");
-  if(star){
-    const id=star.dataset.star;
-    plan.has(id)?plan.delete(id):plan.add(id); savePlan();
-    $("#n-plan").textContent=plan.size;
-    if(state.tab==="comedy") renderComedy(); else renderPlan();
-    return;
-  }
-  const v=ev.target.closest("button.v");
-  if(v){
-    const id=v.dataset.venue;
-    if(state.tab==="comedy"){ state.venue=id; renderComedy(); }
-    highlight([id]); focusPlace(id);
-    if(window.matchMedia("(max-width:900px)").matches) document.getElementById("map").scrollIntoView({block:"start",behavior:"smooth"});
-  }
+  const s=ev.target.closest("[data-star]"); if(s){ ev.preventDefault(); toggleStar(s.dataset.star); return; }
+  const f=ev.target.closest("[data-focus]"); if(f){ focusPlace(f.dataset.focus,true); return; }
+  const v=ev.target.closest("[data-venue]"); if(v){ state.venue=v.dataset.venue; renderComedy(); highlight([state.venue]); $("#pane-comedy").scrollIntoView({block:"start",behavior:"smooth"}); }
 });
 
-drawMap(); renderCrawl(); $("#n-comedy").textContent=events.length; $("#n-plan").textContent=plan.size;
+buildTabs(); drawMap(); setTab("pub");
 })();
 </script>
 </body>
