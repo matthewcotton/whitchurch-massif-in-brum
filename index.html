@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#1E4068">
+<meta name="theme-color" content="#132B47">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <title>Whitchurch Massif in Brum</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,10 +35,16 @@ a{color:var(--tile)}
 button{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--brass);outline-offset:2px}
 
-header{max-width:1240px;margin:0 auto;padding:22px 16px 10px}
+.hero{position:relative;max-width:1240px;margin:0 auto;height:clamp(210px,26vw,340px);overflow:hidden;background:#132B47;border-radius:0 0 10px 10px}
+.hero-art{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero-text{position:relative;z-index:1;padding:26px 22px 0;max-width:min(60%,640px)}
+.hero h1{color:#F6EEDB;text-shadow:0 2px 14px rgba(0,0,0,.4)}
+.hero .dates{color:#EBD9B6;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+.dates .short{display:none}
+.keybar{max-width:1240px;margin:0 auto;padding:10px 16px 4px}
 h1{font-family:var(--display);font-weight:400;font-size:clamp(2rem,7vw,3.6rem);line-height:1;margin:0;color:var(--tile)}
 .dates{margin:6px 0 0;color:var(--muted);font-weight:600;font-size:.95rem}
-.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:12px 0 0;padding:0;list-style:none;font-size:.82rem;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:0;padding:0;list-style:none;font-size:.82rem;color:var(--muted)}
 .legend li{display:flex;align-items:center;gap:6px}
 /* Icons: one set used for map pins, legend, tabs and list rows */
 .ic{display:inline-grid;place-items:center;flex:none;width:20px;height:20px;border-radius:50%;color:#fff;box-sizing:border-box}
@@ -134,7 +143,6 @@ footer p{max-width:80ch;margin:0 0 6px}
 
 @media (max-width:900px){
   main{grid-template-columns:1fr;gap:12px;padding-left:10px;padding-right:10px}
-  header{padding:16px 12px 6px}
   .mapframe{position:relative;top:0;padding:4px}
   #map{height:44vh;min-height:260px}
   .panel{border-radius:4px}
@@ -155,17 +163,121 @@ footer p{max-width:80ch;margin:0 0 6px}
   .legend{gap:4px 12px;font-size:.8rem}
   .legend .ic{width:18px;height:18px}
   h1{font-size:clamp(1.8rem,8.4vw,2.6rem)}
+  .hero{border-radius:0}
+  .dates .long{display:none}.dates .short{display:inline}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(19,43,71,.85) 0,rgba(19,43,71,.55) 45%,rgba(19,43,71,0) 70%);pointer-events:none}
+  .hero-text{padding:20px 14px 0;max-width:62%}
+  .keybar{padding:8px 12px 2px}
   .note{font-size:.88rem}
 }
 
 </style>
 </head>
 <body>
-<header>
-  <h1>Whitchurch Massif in Brum</h1>
-  <p class="dates">Birmingham · Sat 3 &amp; Sun 4 October</p>
-  <ul class="legend" id="legend" aria-label="Map key"></ul>
+<header class="hero">
+  <svg class="hero-art" viewBox="0 0 1200 400" preserveAspectRatio="xMaxYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#132B47"/><stop offset=".5" stop-color="#34608C"/><stop offset=".8" stop-color="#C98F5E"/><stop offset="1" stop-color="#EBC285"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B4A66"/><stop offset="1" stop-color="#15263A"/></linearGradient>
+    <linearGradient id="ale" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F2B347"/><stop offset=".6" stop-color="#D98A22"/><stop offset="1" stop-color="#A9600F"/></linearGradient>
+    <linearGradient id="dark" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6B4A2A"/><stop offset="1" stop-color="#2E1B0E"/></linearGradient>
+    <radialGradient id="glow"><stop offset="0" stop-color="#FFD98A" stop-opacity=".9"/><stop offset="1" stop-color="#FFD98A" stop-opacity="0"/></radialGradient>
+    <pattern id="rings" width="12" height="12" patternUnits="userSpaceOnUse"><circle cx="6" cy="6" r="4.6" fill="none" stroke="#7A5B1E" stroke-width="1.4"/></pattern>
+    <pattern id="ringsS" width="12" height="12" patternUnits="userSpaceOnUse"><circle cx="6" cy="6" r="4.6" fill="none" stroke="#5C6B78" stroke-width="1.4"/></pattern>
+    <pattern id="discs" width="11" height="11" patternUnits="userSpaceOnUse"><circle cx="5.5" cy="5.5" r="3.4" fill="#DCE8F5"/></pattern>
+    <clipPath id="selfclip"><path d="M680 335 C676 290 700 252 742 250 C786 248 812 280 806 335 Z"/></clipPath>
+  </defs>
+  <rect width="1200" height="400" fill="url(#sky)"/>
+  <g fill="#F6EEDB">
+    <circle cx="560" cy="40" r="1.6" opacity=".8"/><circle cx="650" cy="84" r="1.2" opacity=".6"/><circle cx="760" cy="34" r="1.4" opacity=".7"/>
+    <circle cx="880" cy="70" r="1.1" opacity=".6"/><circle cx="985" cy="26" r="1.5" opacity=".8"/><circle cx="1180" cy="62" r="1.3" opacity=".7"/><circle cx="470" cy="96" r="1" opacity=".5"/>
+  </g>
+  <circle cx="1030" cy="92" r="14" fill="#F6EEDB" opacity=".9"/>
+  <!-- distant city -->
+  <path d="M0 340 L0 318 L50 318 L50 300 L90 300 L90 324 L140 324 L140 290 L175 290 L175 322 L240 322 L240 306 L300 306 L300 326 L360 326 L360 296 L392 296 L392 320 L450 320 L450 304 L500 304 L500 340 Z" fill="#2A3D55" opacity=".85"/>
+  <!-- St Martin in the Bull Ring -->
+  <g fill="#7E5A4C"><rect x="526" y="258" width="30" height="80"/><path d="M526 258 L541 168 L556 258 Z"/></g>
+  <path d="M537 300v-16a4 4 0 0 1 8 0v16z" fill="#F2C66D"/>
+  <!-- The Rotunda -->
+  <g>
+    <rect x="590" y="176" width="68" height="162" fill="#6E7F8F"/>
+    <rect x="590" y="176" width="14" height="162" fill="#8FA0AE"/><rect x="646" y="176" width="12" height="162" fill="#56636F"/>
+    <g fill="#F2C66D" opacity=".85">
+      <rect x="592" y="190" width="64" height="4"/><rect x="592" y="204" width="64" height="4"/><rect x="592" y="218" width="64" height="4"/><rect x="592" y="232" width="64" height="4"/>
+      <rect x="592" y="246" width="64" height="4"/><rect x="592" y="260" width="64" height="4"/><rect x="592" y="274" width="64" height="4"/><rect x="592" y="288" width="64" height="4"/>
+      <rect x="592" y="302" width="64" height="4"/><rect x="592" y="316" width="64" height="4"/>
+    </g>
+    <rect x="586" y="170" width="76" height="8" rx="2" fill="#3F4B57"/>
+  </g>
+  <!-- Selfridges -->
+  <g>
+    <path d="M680 335 C676 290 700 252 742 250 C786 248 812 280 806 335 Z" fill="#2C5C9E"/>
+    <rect x="670" y="245" width="145" height="95" fill="url(#discs)" clip-path="url(#selfclip)"/>
+    <path d="M700 270 C716 256 732 253 746 253" stroke="#fff" stroke-opacity=".35" stroke-width="3" fill="none"/>
+  </g>
+  <!-- Library of Birmingham -->
+  <g>
+    <rect x="822" y="272" width="112" height="66" fill="#3C3F46"/><rect x="822" y="272" width="112" height="66" fill="#F2C66D" opacity=".18"/>
+    <rect x="830" y="224" width="96" height="48" fill="#D9B45A"/><rect x="830" y="224" width="96" height="48" fill="url(#rings)"/>
+    <rect x="844" y="194" width="68" height="30" fill="#BFC8D0"/><rect x="844" y="194" width="68" height="30" fill="url(#ringsS)"/>
+    <rect x="866" y="178" width="24" height="16" fill="#D9B45A"/><rect x="866" y="178" width="24" height="16" fill="url(#rings)"/>
+    <rect x="862" y="174" width="32" height="4" fill="#8C6E28"/>
+  </g>
+  <!-- Town Hall -->
+  <g>
+    <rect x="950" y="306" width="118" height="32" fill="#BFAE8E"/>
+    <path d="M950 246 L1009 222 L1068 246 Z" fill="#D9CBB0"/><path d="M962 244 L1009 226 L1056 244 Z" fill="#C6B696"/>
+    <rect x="948" y="246" width="122" height="8" fill="#CDBE9F"/>
+    <g fill="#E4D8BE">
+      <rect x="954" y="254" width="7" height="52"/><rect x="969" y="254" width="7" height="52"/><rect x="984" y="254" width="7" height="52"/><rect x="999" y="254" width="7" height="52"/>
+      <rect x="1014" y="254" width="7" height="52"/><rect x="1029" y="254" width="7" height="52"/><rect x="1044" y="254" width="7" height="52"/><rect x="1057" y="254" width="7" height="52"/>
+    </g>
+    <rect x="952" y="254" width="114" height="52" fill="#7E6E52" opacity=".35"/>
+  </g>
+  <!-- BT Tower -->
+  <g>
+    <rect x="1098" y="112" width="18" height="226" fill="#8C98A3"/><rect x="1098" y="112" width="5" height="226" fill="#A9B4BE"/>
+    <rect x="1092" y="150" width="30" height="10" fill="#6E7A86"/><rect x="1092" y="182" width="30" height="10" fill="#6E7A86"/><rect x="1092" y="214" width="30" height="10" fill="#6E7A86"/>
+    <circle cx="1094" cy="170" r="5" fill="#D4DBE1"/><circle cx="1120" cy="200" r="5" fill="#D4DBE1"/>
+    <rect x="1105" y="94" width="4" height="18" fill="#6E7A86"/><circle cx="1107" cy="94" r="2.5" fill="#E24B3B"/>
+  </g>
+  <!-- towpath and canal -->
+  <rect y="336" width="1200" height="12" fill="#6A3E2E"/><rect y="336" width="1200" height="3" fill="#8A5440"/>
+  <g stroke="#56301F" stroke-width="1"><path d="M0 342H1200"/></g>
+  <rect y="348" width="1200" height="52" fill="url(#water)"/>
+  <g stroke="#F2C66D" stroke-opacity=".35" stroke-width="2" stroke-linecap="round"><path d="M600 362h40M612 372h22M870 360h36M880 370h18M1100 362h14M1004 366h26"/></g>
+  <!-- narrowboat -->
+  <g>
+    <path d="M660 364 L930 364 L942 352 L940 348 L664 348 Z" fill="#1D1B1A"/>
+    <rect x="690" y="330" width="220" height="20" rx="3" fill="#2F5D4F"/>
+    <rect x="690" y="330" width="220" height="4" fill="#C9A04E"/>
+    <g fill="#F2C66D"><rect x="706" y="337" width="12" height="8" rx="4"/><rect x="734" y="337" width="12" height="8" rx="4"/><rect x="762" y="337" width="12" height="8" rx="4"/><rect x="790" y="337" width="12" height="8" rx="4"/><rect x="818" y="337" width="12" height="8" rx="4"/></g>
+    <rect x="846" y="334" width="44" height="14" fill="#8B2E3A"/><circle cx="868" cy="341" r="4" fill="#F6EEDB"/>
+    <rect x="896" y="320" width="5" height="12" fill="#1D1B1A"/>
+    <path d="M660 364 L930 364" stroke="#C9A04E" stroke-width="2"/>
+  </g>
+  <!-- foreground: two pints on a pub table -->
+  <g transform="translate(1156 376) scale(1.35) translate(-1156 -376)">
+    <rect x="1110" y="376" width="96" height="8" fill="#5A3A24"/><rect x="1118" y="384" width="6" height="16" fill="#3E2716"/><rect x="1188" y="384" width="6" height="16" fill="#3E2716"/>
+    <path d="M1124 322 L1152 322 L1149 376 L1127 376 Z" fill="url(#ale)"/>
+    <path d="M1123 312 Q1130 304 1138 310 Q1146 302 1153 312 L1152 324 L1124 324 Z" fill="#FFF6E2"/>
+    <path d="M1129 330 L1131 370" stroke="#fff" stroke-opacity=".45" stroke-width="3" stroke-linecap="round"/>
+    <path d="M1160 324 L1188 324 L1185 376 L1163 376 Z" fill="url(#dark)"/>
+    <path d="M1159 316 Q1166 309 1174 314 Q1182 308 1189 316 L1188 326 L1160 326 Z" fill="#EFE2C6"/>
+    <path d="M1165 332 L1167 370" stroke="#fff" stroke-opacity=".3" stroke-width="3" stroke-linecap="round"/>
+    <ellipse cx="1156" cy="340" rx="50" ry="36" fill="url(#glow)" opacity=".18"/>
+  </g>
+  <!-- canal lamp -->
+  <path d="M1076 336V286" stroke="#1B222C" stroke-width="4"/><path d="M1068 286h16l-3-12h-10z" fill="#1B222C"/><circle cx="1076" cy="281" r="16" fill="url(#glow)"/>
+</svg>
+  <div class="hero-text">
+    <h1>Whitchurch Massif in Brum</h1>
+    <p class="dates">Birmingham · <span class="long">Sat 3 &amp; Sun 4 October</span><span class="short">3–4 Oct</span></p>
+  </div>
 </header>
+<div class="keybar"><ul class="legend" id="legend" aria-label="Map key"></ul></div>
 
 <main>
   <section class="mapframe" aria-label="Map">
@@ -234,12 +346,18 @@ const places = {
                food:"Cobs only; bring your own food, plates provided", note:"Birmingham's cask institution: over 25 handpulls across two floors and a roof terrace. Bundobust (Indian street food) is a few doors up."},
   goodintent: {cat:"pub", name:"The Good Intent", addr:"32-33 Great Western Arcade, B2 5HU", lat:52.48187, lng:-1.89739, pid:"ChIJNwbaHgq9cEgRkmL57EdnHX8", camra:131260, gbg:true,
                food:"Sandwiches on the bar", note:"Craddock's not-for-profit bar in the Victorian arcade opposite Snow Hill. Six handpumps; profits go to charity."},
-  woodman:    {cat:"pub", name:"The Woodman", addr:"1 Curzon St, B4 7XG", lat:52.48170, lng:-1.88677, pid:"ChIJ6b4zbwC9cEgRuL0K2wBFGCA", camra:130887, gbg:true, heritage:true,
+  woodman:    {camraUrl:"https://camra.org.uk/pubs/121303", cat:"pub", name:"The Woodman", addr:"1 Curzon St, B4 7XG", lat:52.48170, lng:-1.88677, pid:"ChIJ6b4zbwC9cEgRuL0K2wBFGCA", camra:130887, gbg:true, heritage:true,
                food:"Pies, sandwiches, pizzas, cheese boards", note:"Three-star historic interior from 1897, reopened in 2024. Draught Bass and up to nine casks."},
-  anchor:     {cat:"pub", name:"The Anchor", addr:"308 Bradford St, B5 6ET", lat:52.47449, lng:-1.88846, pid:"ChIJ67oWZIe8cEgRrsmgHnFl6vg", camra:130690, gbg:true, heritage:true,
+  anchor:     {camraUrl:"https://camra.org.uk/pubs/121107", cat:"pub", name:"The Anchor", addr:"308 Bradford St, B5 6ET", lat:52.47449, lng:-1.88846, pid:"ChIJ67oWZIe8cEgRrsmgHnFl6vg", camra:130690, gbg:true, heritage:true,
                note:"1902 multi-room pub by James & Lister Lea, on CAMRA's National Inventory. Up to four handpulls."},
   queens:     {cat:"pub", name:"The Queens Arms", addr:"150 Newhall St, B3 1RY", lat:52.48368, lng:-1.90661, pid:"ChIJAYGrsPK8cEgRJk7_AeMe_rU", camra:130689,
                food:"No kitchen; bring your own", note:"Grade II Victorian corner pub with tiled signage outside and a heritage central bar. Board games; opens 10am Saturdays."},
+  towncrier:  {cat:"pub", name:"Town Crier", addr:"34 Macdonald St, Digbeth, B5 6TG", lat:52.47000, lng:-1.89139, pid:"ChIJnbSny3y8cEgRrSkfTMaejJg", camraUrl:"https://camra.org.uk/pubs/121377", heritage:true,
+               note:"Backstreet boozer on CAMRA's historic interiors list, with front and rear bars. No cask ale, so go for the building. Pool table and a friendly local crowd; 10 min walk from The Anchor."},
+  rosevilla:  {cat:"pub", name:"Rose Villa Tavern", addr:"172 Warstone Lane, Jewellery Quarter, B18 6JW", lat:52.48719, lng:-1.91227, pid:"ChIJl_s_K-y8cEgRbXR158iSP8E", camraUrl:"https://camra.org.uk/pubs/121221", heritage:true,
+               note:"Grade II listed Jewellery Quarter pub famous for its tiled passage, tile paintings, tiled fireplace and stained glass. Usually one changing cask. Near Craft & Culture and 1000 Trades."},
+  oldmoseley: {cat:"pub", name:"Old Moseley Arms", addr:"53 Tindal St, Balsall Heath, B12 9QU", lat:52.45611, lng:-1.88987, pid:"ChIJuQoxXXK8cEgR49C6c2fGLa0", camraUrl:"https://camra.org.uk/pubs/121120", heritage:true,
+               food:"Indian food in the evenings", note:"Two-roomed traditional pub on CAMRA's historic interiors list, run by the same landlord since 1998. Five regular casks including Bathams. About 1.5 miles south of the centre, so a short taxi."},
   indianbrew: {cat:"extra", name:"Indian Brewery Taproom", addr:"1 Mary Ann St, B3 1RL", lat:52.48592, lng:-1.90382, pid:"ChIJ08NVFji9cEgRXV-WrUHxL8k", camra:260079,
                food:"Indian-twist pizzas", note:"Big beer hall in a former engineering works, brewing on site. Opens 12pm Saturdays; busy when sport is on."},
   golffang:   {cat:"extra", name:"Golf Fang", addr:"The Custard Factory, Gibb St, B9 4AA", lat:52.47594, lng:-1.88338, pid:"ChIJd6-vWIC8cEgRIZLs1KKcGBE",
@@ -247,9 +365,9 @@ const places = {
   lycett:     {cat:"extra", name:"Joe Lycett: EVERY THING MUST GO", addr:"Birmingham Museum & Art Gallery, Chamberlain Square, B3 3DH", lat:52.48098, lng:-1.90352,
                url:"https://www.birminghammuseums.org.uk/exhibitions/every-thing-must-go",
                note:"Free exhibition: Joe Lycett's first major solo art show, a salon-style 'neon graveyard' of things no longer with us. Tue-Sun 10am-5pm, so open both Saturday and Sunday. The Tat Vision tatty tours on Saturday are of this exhibition."},
-  whiteswan:  {cat:"digbeth", name:"White Swan", addr:"276 Bradford St, B5 6EP", lat:52.47374, lng:-1.88631, pid:"ChIJ2-J5K-W9cEgRCGvEetFUWSQ", camra:130707, heritage:true,
+  whiteswan:  {camraUrl:"https://camra.org.uk/pubs/121124", cat:"digbeth", name:"White Swan", addr:"276 Bradford St, B5 6EP", lat:52.47374, lng:-1.88631, pid:"ChIJ2-J5K-W9cEgRCGvEetFUWSQ", camra:130707, heritage:true,
                note:"Two-roomed Victorian pub with a nationally important interior and classic tiling. Hours can vary and it may close early if quiet. 5 min walk from Golf Fang."},
-  spotteddog: {cat:"digbeth", name:"The Spotted Dog", addr:"104 Warwick St, B12 0NH", lat:52.47362, lng:-1.88297, pid:"ChIJf5DQ6n-8cEgRiz86YEZ9PuE", camra:130719,
+  spotteddog: {camraUrl:"https://camra.org.uk/pubs/121136", cat:"digbeth", name:"The Spotted Dog", addr:"104 Warwick St, B12 0NH", lat:52.47362, lng:-1.88297, pid:"ChIJf5DQ6n-8cEgRiz86YEZ9PuE", camra:130719, heritage:true,
                note:"Multi-roomed traditional Irish pub, family-run since 1985. Cheap dark mild, candlelit rooms and a big covered garden. Opens 12.30pm Saturdays."},
   oldcrown:   {cat:"digbeth", name:"The Old Crown", addr:"188 High St Deritend, B12 0LD", lat:52.47477, lng:-1.88356, pid:"ChIJfa0_eoC8cEgR-aHYI6Nfidc",
                food:"Full menu", note:"Timber-framed medieval building, often billed as Birmingham's oldest pub. Low beams and a rabbit warren of rooms. 2 min from Golf Fang."},
@@ -261,6 +379,8 @@ const places = {
                note:"Two-room community pub with Ostlers beers brewed at the back, up to six handpulls. About 20 min walk from the hotel."},
   physician:  {cat:"nearhotel", name:"The Physician", addr:"Harborne Rd, B15 3DH", lat:52.47041, lng:-1.92417, pid:"ChIJhUTZK1S8cEgROFSob0uKz_M", camra:131225,
                food:"Full menu", note:"Upmarket multi-room pub in a grand former medical library. About 15 min walk from the hotel."},
+  bell:       {cat:"nearhotel", name:"The Bell, Harborne", addr:"11 Old Church Rd, Harborne, B17 0BB", lat:52.45382, lng:-1.95921, pid:"ChIJHb6KhZS9cEgRoySN7v0nKyY", camraUrl:"https://camra.org.uk/pubs/121191", heritage:true,
+               food:"Full menu, breakfast weekends from 10am", note:"On CAMRA's historic interiors list: an old village pub by the church with a snug and servery, plus a bowling green garden. About 30 min walk or a short taxi from the hotel; pairs with the White Horse."},
   edgcafe:    {cat:"brunch", name:"Edgbaston Cafe", addr:"195-196 Monument Rd, B16 8UU", lat:52.47280, lng:-1.93091, pid:"ChIJh4wK3Nu9cEgRf4g61mMqcQ4",
                note:"Closest option: a proper greasy-spoon full English, good value. About 10 min walk. Sun 7.30am-3.30pm."},
   bostontea:  {cat:"brunch", name:"Boston Tea Party", addr:"Edgbaston Village, Harborne Rd, B15 3AA", lat:52.47065, lng:-1.92311, pid:"ChIJY32-iFa8cEgRggApI8A9oKk",
@@ -282,7 +402,7 @@ const places = {
   oldrep:     {cat:"venue", name:"Old Rep Theatre", addr:"Station St, B5 4DY", lat:52.4761, lng:-1.8967}
 };
 const SECTIONS=[
-  ["pub","Pubs","Good Beer Guide and heritage pubs, in any order."],
+  ["pub","Pubs","Good Beer Guide pubs and CAMRA historic interiors, in any order."],
   ["digbeth","Near Golf Fang","Digbeth pubs within a few minutes' walk of the Custard Factory."],
   ["extra","Others","Brewery taproom, crazy golf and Joe Lycett's exhibition."],
   ["nearhotel","Near hotel","For a pint without going into town."],
@@ -361,7 +481,7 @@ function nearestPub(vid){
 }
 const hasShows = id => events.some(e=>e.v===id);
 const gmaps = p => "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(p.name+", "+p.addr+", Birmingham")+(p.pid?"&query_place_id="+p.pid:"");
-const camra = p => p.camra ? "https://birmingham.camra.org.uk/viewnode.php?id="+p.camra : null;
+const camra = p => p.camraUrl || (p.camra ? "https://birmingham.camra.org.uk/viewnode.php?id="+p.camra : null);
 const ext = (href,label) => `<a class="act" href="${href}" target="_blank" rel="noopener">${label}</a>`;
 function placeActs(id,p){
   return `<div class="acts"><button class="act" data-focus="${id}">Show on map</button>${p.url?ext(p.url,"Details"):""}${ext(gmaps(p),"Google Maps")}${camra(p)?ext(camra(p),"CAMRA"):""}</div>`;
