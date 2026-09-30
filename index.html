@@ -37,15 +37,26 @@ h1{font-family:var(--display);font-weight:400;font-size:clamp(2rem,7vw,3.6rem);l
 .dates{margin:6px 0 0;color:var(--muted);font-weight:600;font-size:.95rem}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:12px 0 0;padding:0;list-style:none;font-size:.82rem;color:var(--muted)}
 .legend li{display:flex;align-items:center;gap:6px}
-.key{width:13px;height:13px;display:inline-block;flex:none}
-.key.pub{border-radius:50%;background:#2E5D4F}
-.key.both{border-radius:50%;background:#2E5D4F;box-shadow:0 0 0 2px #8B2E3A}
-.key.alt{border-radius:50%;background:#fff;border:3px solid #2E5D4F}
-.key.comedy{border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#8B2E3A}
-.key.other{background:#8B2E3A;transform:rotate(45deg) scale(.85)}
-.key.brunch{border-radius:50%;background:#A67B2C}
-.key.hotel{border-radius:2px;background:#1E4068}
-
+/* Icons: one set used for map pins, legend, tabs and list rows */
+.ic{display:inline-grid;place-items:center;flex:none;width:20px;height:20px;border-radius:50%;color:#fff;box-sizing:border-box}
+.ic svg{width:64%;height:64%;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round;display:block}
+.ic-pub{background:#2E5D4F}
+.ic-both{background:#2E5D4F;box-shadow:0 0 0 2px #C0392B}
+.ic-digbeth{background:#fff;color:#2E5D4F;border:2px solid #2E5D4F}
+.ic-nearhotel{background:#fff;color:#1E4068;border:2px solid #1E4068}
+.ic-comedy{background:#8B2E3A;border-radius:50% 50% 50% 0;transform:rotate(-45deg)}
+.ic-comedy svg{transform:rotate(45deg)}
+.ic-other{background:#6B3D7A}
+.ic-brunch{background:#A67B2C}
+.ic-hotel{background:#1E4068;border-radius:5px}
+.ic-star{background:none;color:var(--brass)}
+.ic-star svg{width:100%;height:100%;fill:currentColor;stroke:none}
+.ic.pin{width:34px;height:34px;border:3px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.4)}
+.ic.pin.ic-digbeth,.ic.pin.ic-nearhotel{border-width:3px}
+.ic.pin.ic-digbeth{border-color:#2E5D4F}.ic.pin.ic-nearhotel{border-color:#1E4068}
+.ic.pin.ic-both{box-shadow:0 0 0 3px #C0392B,0 1px 5px rgba(0,0,0,.4)}
+.ic.pin.sel{outline:4px solid #A67B2C;outline-offset:2px}
+.item .ic{margin-top:1px}
 main{max-width:1240px;margin:0 auto;padding:6px 16px 32px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:20px;align-items:start}
 
 /* Map */
@@ -55,15 +66,6 @@ main{max-width:1240px;margin:0 auto;padding:6px 16px 32px;display:grid;grid-temp
 .maphint{margin:0;padding:6px 10px;font-size:.75rem;color:var(--muted);border-top:1px solid var(--line);background:var(--panel)}
 .maperr{display:none;position:absolute;left:10px;right:10px;top:10px;z-index:1000;background:var(--panel);border:2px solid var(--oxblood);border-radius:4px;padding:10px 12px;font-size:.9rem}
 .maperr.on{display:block}
-.pin{display:grid;place-items:center;width:28px;height:28px;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35);font:700 13px var(--body);color:#fff}
-.pin.pub{border-radius:50%;background:#2E5D4F}
-.pin.both{border-radius:50%;background:#2E5D4F;box-shadow:0 0 0 3px #8B2E3A,0 1px 4px rgba(0,0,0,.35)}
-.pin.alt{border-radius:50%;background:#fff;border:5px solid #2E5D4F}
-.pin.comedy{border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#8B2E3A}
-.pin.other{border-radius:4px;background:#8B2E3A;transform:rotate(45deg);width:24px;height:24px}
-.pin.brunch{border-radius:50%;background:#A67B2C}
-.pin.hotel{border-radius:4px;background:#1E4068}
-.pin.sel{outline:4px solid #A67B2C;outline-offset:2px}
 .leaflet-popup-content{font:14px/1.4 var(--body);margin:10px 14px}
 .leaflet-popup-content strong{font-size:15px}
 .leaflet-popup-content p{margin:4px 0}
@@ -75,7 +77,8 @@ main{max-width:1240px;margin:0 auto;padding:6px 16px 32px;display:grid;grid-temp
 .panel{background:var(--panel);border:1px solid var(--line);border-radius:6px;min-width:0}
 .tabs{display:flex;border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);background:var(--panel);z-index:5;border-radius:6px 6px 0 0;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .tabs::-webkit-scrollbar{display:none}
-.tabs button{flex:0 0 auto;white-space:nowrap;scroll-snap-align:start;background:none;border:0;padding:14px 14px 12px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px;min-height:48px}
+.tabs .n{margin-left:0}
+.tabs button{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;scroll-snap-align:start;background:none;border:0;padding:14px 14px 12px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px;min-height:48px}
 .tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--oxblood)}
 .tabs .n{display:inline-block;min-width:1.5em;margin-left:4px;padding:0 5px;border-radius:9px;background:var(--wash);font-size:.78rem;color:var(--ink)}
 .tabwrap{position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
@@ -97,13 +100,11 @@ main{max-width:1240px;margin:0 auto;padding:6px 16px 32px;display:grid;grid-temp
 .subnote{margin:2px 0 4px;font-size:.84rem;color:var(--muted)}
 ol.list{list-style:none;margin:0;padding:0}
 .item{display:grid;grid-template-columns:52px minmax(0,1fr) 40px;gap:2px 10px;padding:12px 0;border-top:1px solid var(--line)}
-.item.place{grid-template-columns:16px minmax(0,1fr) 40px}
+.item.place{grid-template-columns:22px minmax(0,1fr) 40px}
 .item.flash{animation:flash 1.2s ease-out}
 @keyframes flash{from{background:var(--wash)}to{background:transparent}}
 .t{font-family:var(--display);font-size:1.15rem;line-height:1.1;color:var(--oxblood)}
 .t small{display:block;font-family:var(--body);font-size:.7rem;color:var(--muted);margin-top:3px;line-height:1.2}
-.dot{width:14px;height:14px;margin-top:4px;border-radius:50%}
-.dot.pub{background:#2E5D4F}.dot.alt{background:#fff;border:3px solid #2E5D4F}.dot.other{background:#8B2E3A;border-radius:2px;transform:rotate(45deg) scale(.8)}.dot.brunch{background:#A67B2C}
 .item h3{margin:0;font-size:1rem;line-height:1.3}
 .item h3 a{color:inherit;text-decoration:none}
 .meta{margin:3px 0 0;font-size:.86rem;color:var(--muted)}
@@ -121,8 +122,9 @@ ol.list{list-style:none;margin:0;padding:0}
 .star{background:none;border:1px solid var(--line);border-radius:50%;width:40px;height:40px;cursor:pointer;font-size:1.05rem;color:var(--muted);align-self:start}
 .star[aria-pressed="true"]{background:var(--brass);border-color:var(--brass);color:#fff}
 .empty{color:var(--muted);padding:14px 0 4px;margin:0}
-.hotelcard{display:grid;grid-template-columns:16px minmax(0,1fr);gap:0 10px;padding:12px;margin-top:10px;background:var(--wash);border-radius:4px}
-.hotelcard .sq{width:14px;height:14px;background:#1E4068;border-radius:2px;margin-top:4px}
+.hotelcard{display:grid;grid-template-columns:22px minmax(0,1fr);gap:0 10px;padding:12px;margin-top:10px;background:var(--wash);border-radius:4px}
+.hotelcard[hidden]{display:none}
+
 .hotelcard p{margin:3px 0 0;font-size:.88rem;color:var(--muted)}
 .plannote{font-size:.88rem;color:var(--muted);margin:10px 0 0}
 footer{max-width:1240px;margin:0 auto;padding:0 16px 32px;font-size:.8rem;color:var(--muted)}
@@ -147,15 +149,7 @@ footer p{max-width:80ch;margin:0 0 6px}
 <header>
   <h1>Whitchurch Massif in Brum</h1>
   <p class="dates">Birmingham · Sat 3 &amp; Sun 4 October</p>
-  <ul class="legend" aria-label="Map key">
-    <li><span class="key pub"></span>Pub</li>
-    <li><span class="key both"></span>Pub with comedy</li>
-    <li><span class="key alt"></span>Nearby pub</li>
-    <li><span class="key comedy"></span>Comedy</li>
-    <li><span class="key other"></span>Extras</li>
-    <li><span class="key brunch"></span>Brunch</li>
-    <li><span class="key hotel"></span>Hotel</li>
-  </ul>
+  <ul class="legend" id="legend" aria-label="Map key"></ul>
 </header>
 
 <main>
@@ -172,7 +166,7 @@ footer p{max-width:80ch;margin:0 0 6px}
 
     <div class="tabpane" id="pane-places" role="tabpanel">
       <div class="hotelcard" id="hotelcard" hidden>
-        <span class="sq" aria-hidden="true"></span>
+        <span data-icon="hotel"></span>
         <div>
           <strong>Premier Inn Birmingham Central (Hagley Road)</strong>
           <p>176-184 Hagley Rd, B16 9NY. About 2.2 miles west of the centre: a 10-minute taxi, or buses 9 and 126 along Hagley Road.</p>
@@ -272,12 +266,37 @@ const places = {
 const SECTIONS=[
   ["pub","Pubs","Good Beer Guide and heritage pubs, in any order."],
   ["digbeth","Near Golf Fang","Digbeth pubs within a few minutes' walk of the Custard Factory."],
-  ["extra","Extras","Brewery taproom and crazy golf."],
+  ["extra","Others","Brewery taproom and crazy golf."],
   ["nearhotel","Near hotel","For a pint without going into town."],
   ["brunch","Sunday brunch","All closer to the hotel than the city centre."]
 ];
-const TABS=[["pub","Pubs"],["comedy","Comedy"],["digbeth","Near Golf Fang"],["extra","Extras"],["nearhotel","Near hotel"],["brunch","Brunch"],["plan","My plan"]];
+const TABS=[["pub","Pubs","pub"],["comedy","Comedy","comedy"],["digbeth","Near Golf Fang","digbeth"],["extra","Others","other"],["nearhotel","Near hotel","nearhotel"],["brunch","Brunch","brunch"],["plan","My plan","star"]];
 const isPlaceTab = t => SECTIONS.some(([c])=>c===t);
+
+/* Icon glyphs adapted from Lucide (ISC licence) */
+const GLYPH={
+  pint:'<path d="M17 11h1a3 3 0 0 1 0 6h-1"/><path d="M9 12v6"/><path d="M13 12v6"/><path d="M14 7.5c-1 0-1.44.5-3 .5s-2-.5-3-.5-1.72.5-2.5.5a2.5 2.5 0 0 1 0-5c.78 0 1.57.5 2.5.5S9.44 2 11 2s2 1.5 3 1.5 1.72-.5 2.5-.5a2.5 2.5 0 0 1 0 5c-.78 0-1.5-.5-2.5-.5Z"/><path d="M5 8v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8"/>',
+  mic:'<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/>',
+  flag:'<path d="M5 22V3"/><path d="M5 3l11 4.5L5 12"/><circle cx="16" cy="19" r="2.2"/>',
+  bed:'<path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/>',
+  coffee:'<path d="M10 2v2"/><path d="M14 2v2"/><path d="M6 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1-1 7.83"/>',
+  sparkle:'<path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.14 1.58a.5.5 0 0 1 0 .96l-6.14 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/>',
+  star:'<path d="M11.52 2.3a.53.53 0 0 1 .95 0l2.31 4.68a2.12 2.12 0 0 0 1.6 1.16l5.16.75a.53.53 0 0 1 .3.91l-3.74 3.64a2.12 2.12 0 0 0-.61 1.88l.88 5.14a.53.53 0 0 1-.77.56l-4.62-2.43a2.12 2.12 0 0 0-1.97 0L6.4 21.01a.53.53 0 0 1-.77-.56l.88-5.14a2.12 2.12 0 0 0-.61-1.88L2.16 9.8a.53.53 0 0 1 .29-.91l5.17-.75a2.12 2.12 0 0 0 1.6-1.16z"/>'
+};
+/* kind -> glyph, legend label */
+const ICONS={
+  pub:["pint","Pub"], both:["pint","Pub with comedy"], digbeth:["flag","Pub near Golf Fang"], nearhotel:["pint","Pub near hotel"],
+  comedy:["mic","Comedy"], other:["sparkle","Others"], brunch:["coffee","Brunch"], hotel:["bed","Hotel"], star:["star","My plan"]
+};
+const icon = (kind,extra="") => `<span class="ic ic-${kind} ${extra}" aria-hidden="true"><svg viewBox="0 0 24 24">${GLYPH[ICONS[kind][0]]}</svg></span>`;
+function kindOf(id){
+  const p=places[id];
+  if(p.cat==="hotel") return "hotel";
+  if(p.cat==="pub") return events.some(e=>e.v===id)?"both":"pub";
+  if(p.cat==="extra") return "other";
+  if(p.cat==="venue") return "comedy";
+  return p.cat; // digbeth, nearhotel, brunch
+}
 
 const U = "https://www.bhamcomfest.co.uk/";
 const events = [
@@ -347,14 +366,6 @@ const state={tab:"pub", price:"all", near:false, venue:null};
 
 /* ---------- map ---------- */
 const markers={}; let map=null;
-function pinClass(id,p){
-  if(p.cat==="hotel") return ["hotel","H"];
-  if(p.cat==="pub") return [hasShows(id)?"both":"pub",""];
-  if(p.cat==="digbeth"||p.cat==="nearhotel") return ["alt",""];
-  if(p.cat==="extra") return ["other",""];
-  if(p.cat==="brunch") return ["brunch",""];
-  return ["comedy",""];
-}
 function popupHTML(id){
   const p=places[id], shows=events.filter(e=>e.v===id).sort((a,b)=>mins(a.t)-mins(b.t));
   let h=`<strong>${esc(p.name)}</strong><p>${esc(p.addr)}</p>`;
@@ -376,16 +387,16 @@ function drawMap(){
   let errs=0; tiles.on("tileerror",()=>{ if(++errs>3) $("#maperr").classList.add("on"); });
   const core=[];
   for(const [id,p] of Object.entries(places)){
-    const [cls,txt]=pinClass(id,p);
-    const icon=L.divIcon({className:"",html:`<div class="pin ${cls}">${txt}</div>`,iconSize:[28,28],iconAnchor:cls==="comedy"?[14,28]:[14,14],popupAnchor:[0,-16]});
-    markers[id]=L.marker([p.lat,p.lng],{icon,title:p.name,keyboard:true}).addTo(map).bindPopup(()=>popupHTML(id),{maxWidth:260});
+    const kind=kindOf(id);
+    const pinIcon=L.divIcon({className:"",html:icon(kind,"pin"),iconSize:[34,34],iconAnchor:kind==="comedy"?[17,34]:[17,17],popupAnchor:[0,-18]});
+    markers[id]=L.marker([p.lat,p.lng],{icon:pinIcon,title:p.name,keyboard:true}).addTo(map).bindPopup(()=>popupHTML(id),{maxWidth:260});
     markers[id].on("click",()=>selectPlace(id));
     if(p.cat==="pub"||p.cat==="venue"||p.cat==="extra") core.push([p.lat,p.lng]);
   }
   map.fitBounds(core,{padding:[24,24]});
 }
 function highlight(ids){
-  for(const id in markers){ const e=markers[id].getElement(); const pin=e&&e.querySelector(".pin"); pin&&pin.classList.toggle("sel",!!ids&&ids.includes(id)); }
+  for(const id in markers){ const e=markers[id].getElement(); const pin=e&&e.querySelector(".ic"); pin&&pin.classList.toggle("sel",!!ids&&ids.includes(id)); }
 }
 function focusPlace(id,scroll){
   highlight([id]);
@@ -408,8 +419,7 @@ function selectPlace(id){
 function placeRow(id,p){
   const shows=events.filter(e=>e.v===id);
   const li=el("li",{class:"item place",id:"row-"+id});
-  const dotc=p.cat==="pub"?"pub":p.cat==="extra"?"other":p.cat==="brunch"?"brunch":"alt";
-  li.innerHTML=`<span class="dot ${dotc}" aria-hidden="true"></span>
+    li.innerHTML=`${icon(kindOf(id))}
     <div><h3><a href="${gmaps(p)}" target="_blank" rel="noopener">${esc(p.name)}</a></h3>
       <p class="meta">${p.gbg?'<span class="badge b-gbg">Good Beer Guide</span>':''}${p.heritage?'<span class="badge b-her">Historic interior</span>':''}${esc(p.addr)}</p>
       <p class="note">${esc(p.note)}</p>
@@ -430,9 +440,9 @@ function renderPlaces(cat){
 }
 function buildTabs(){
   const bar=$("#tabs"); bar.innerHTML="";
-  for(const [k,label] of TABS){
+  for(const [k,label,ic] of TABS){
     const n = k==="comedy" ? events.length : k==="plan" ? plan.size : Object.values(places).filter(p=>p.cat===k).length;
-    bar.appendChild(el("button",{role:"tab",id:"tab-"+k,"data-tab":k,"aria-selected":String(k===state.tab)},`${esc(label)} <span class="n"${k==="plan"?' id="n-plan"':''}>${n}</span>`));
+    bar.appendChild(el("button",{role:"tab",id:"tab-"+k,"data-tab":k,"aria-selected":String(k===state.tab)},`${icon(ic)}${esc(label)} <span class="n"${k==="plan"?' id="n-plan"':''}>${n}</span>`));
   }
 }
 
@@ -511,6 +521,8 @@ document.addEventListener("click",ev=>{
   const v=ev.target.closest("[data-venue]"); if(v){ state.venue=v.dataset.venue; renderComedy(); highlight([state.venue]); $("#pane-comedy").scrollIntoView({block:"start",behavior:"smooth"}); }
 });
 
+$("#legend").innerHTML=["pub","both","digbeth","nearhotel","comedy","other","brunch","hotel"].map(k=>`<li>${icon(k)}${ICONS[k][1]}</li>`).join("");
+document.querySelectorAll("[data-icon]").forEach(n=>n.outerHTML=icon(n.dataset.icon));
 buildTabs(); drawMap(); setTab("pub");
 })();
 </script>
